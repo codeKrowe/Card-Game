@@ -11,26 +11,12 @@
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////
-// dynarray(orig)
-// copy constructor to create copy of dynamic array with its own
-// memory. if memory cannot be allocated, exception is thrown
-// parameter:	orig - reference to original array
+// cardDeck(newsize, initvalue=0)
+// constructor to create a new dynamic deck with size newsize 
+// if memory cannot be allocated, exception is thrown
+//
+// parameter: newsize - size of dynamic array
 //////////////////////////////////////////////////////////////////////
-cardDeck::cardDeck(cardDeck &orig)
-{	
-  try {
-    size = orig.size;
-    deck = new int[size];
-  
-    for (int i=0; i<size; i++)
-      deck[i] = orig.deck[i];
-  } catch (bad_alloc ex) {
-    // report error to cerr and rethrow exception
-    cerr << "Error when allocation memory in copy constructor "
-	 << "dynArray(orig)\n";
-    throw ex;
-  }
-}
 
 cardDeck::cardDeck(int newSize)
 { 
@@ -45,18 +31,74 @@ cardDeck::cardDeck(int newSize)
   }
 }
 
+//////////////////////////////////////////////////////////////////////
+// dynarray(orig)
+// copy constructor to create copy of a card deck with its own
+// memory. if memory cannot be allocated, exception is thrown
+// parameter: orig - reference to original deck
+//////////////////////////////////////////////////////////////////////
+cardDeck::cardDeck(cardDeck &orig)
+{ 
+  try {
+    size = orig.size;
+    deck = new int[size];
+  
+    for (int i=0; i<size; i++)
+      deck[i] = orig.deck[i];
+  } catch (bad_alloc ex) {
+
+    //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /// Need to change this to custom Exceptions class
+    //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // report error to cerr and rethrow exception
+    cerr << "Error when allocation memory in copy constructor "
+   << "dynArray(orig)\n";
+    throw ex;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////
+// ~cardDeck()
+// destructor for class - frees up 
+// the dynamically allocated
+// memory
+//
+// parameter: none
+//////////////////////////////////////////////////////////////////////
+
+cardDeck::~cardDeck()
+{
+  delete[] deck;
+}
+
+//////////////////////////////////////////////////////////////////////
+// deleteCard()
+//////////////////////////////////////////////////////////////////////
+
+
 void cardDeck::deleteCard()
 {
   // If less that the current size
   // then it is better to just reduce the
   // index total size rather than waste
   // processing copying
-  size = size-1;
+  //
+  // Simple and effective
+  if (size > 0){size = size-1;}
 }
 
+//////////////////////////////////////////////////////////////////////
+// addCard()
+//////////////////////////////////////////////////////////////////////
 
 void cardDeck::addCard(int card)
 {
+  /*
+  need to make sure that cards cant be added
+  above 52
+  Correct Error handling too
+  */
   int i;
   int *newDeck;
   int newsize = size +1;
@@ -75,13 +117,85 @@ void cardDeck::addCard(int card)
 
 }
 
+//////////////////////////////////////////////////////////////////////
+// lookAtCard(index)
+// provides access (both reading and writing) to the top element
+// of the card deck.
+// 
+// Does not modify the Deck
+//
+// parameter: index - index of element to be accessed
+//////////////////////////////////////////////////////////////////////
 
-
+int &cardDeck::lookAtCard(int index) const
+{
+  return deck[index]; 
+}
 int &cardDeck::accessCard(int index) 
 {
   return deck[index]; 
 }
 
+
+///////////////////////////////////////////////////////////
+//
+// Incomplete Funtions 
+//////////////////////
+
+//////////////////////////////////////////////////////////////////////
+//moveAllCards(destination): Moves all cards 
+//from the CardDeck source to CardDeck destination.
+//
+//Pre: source and destination are valid instantiations of the ADT CardDeck.
+//Post: All cards have been moved from source (which now is empty) 
+//to destination (which now contains additionally all cards previously in source)
+//////////////////////////////////////////////////////////////////////
+
+int &cardDeck::moveAllCards(int &destination)
+{
+return destination;
+}
+
+//////////////////////////////////////////////////////////////////////
+// shuffleDeck()
+//////////////////////////////////////////////////////////////////////
+
+void cardDeck::shuffleDeck()
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////
+//initialiseCardDeck(int setNum)
+//////////////////////////////////////////////////////////////////////
+
+void cardDeck::initialiseCardDeck(int setNum)
+{
+
+
+}
+
+
+void cardDeck::deleteCardDeck()
+{
+
+
+}
+
+
+void cardDeck::createInitialisedCardDeck(int s)
+{
+
+
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+// 
+// Development Testing Funtions
+//
+//////////////////////////////////////////////////////////////////////
 
 void cardDeck::testListContents()
 {
