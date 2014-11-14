@@ -1,17 +1,17 @@
-////////////////////////////////
-// Definition of a card class //
-////////////////////////////////
+// Definition of a card class
+//
+// Contains very basic card structure.
 
-#include "Card.h"
+#include "card.h"
 using namespace std;
 
-Card::Card(Suit newSuit, Rank newRank)
+card::card(Suit newSuit, Rank newRank)
 {
     suit = newSuit;
     rank = newRank;
 }
 
-string Card::getRankAsString(Rank rank)
+string card::getRankAsString()
 {
   string rankString;
 
@@ -64,7 +64,7 @@ string Card::getRankAsString(Rank rank)
     return rankString;
 }
 
-string Card::getSuitAsString(Suit suit)
+string card::getSuitAsString()
 {
     string suitString;
 

@@ -1,4 +1,4 @@
-#include "Card.h"
+#include "card.h"
 #include <iostream>
 #include <string>
 
@@ -6,26 +6,27 @@ using namespace std;
 
 int main()
 {
-    Card c1(Card::Suit Spades, Card::Rank Two);
-    cout << "Card created..." << endl;
+  // Creates a single card
+  card c1(card::Spades, card::Ace);
+  cout << "Card created..." << endl;
 
-    // This gives an error, no idea why???
-    // Was trying different things to make it work.
+  // Print out cards suit and rank in string format!
+  cout << c1.getRankAsString() << endl;
+  cout << c1.getSuitAsString() << endl;
 
-    /*
-    main.cpp:12:8: error: request for member ‘getCardRank’ in ‘c1’, which is of non-class type ‘Card(Card::Suit, Card::Rank)’
-     c1.getCardRank();
-    */
+  // generate a deck of card objects!
+  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  {
+    for (int rank = card::Ace; rank <= card::King; ++rank)
+    {
+        // must cast the suit and rank integers back to enum type
+        card c2((card::Suit) suit, (card::Rank) rank); 
 
-
-    c1.getCardRank();
-
-    // cout << c.getCardRank << endl;
-    // cout << c.getCardSuit << endl;
-    // c.getCardRank;
-    // c.getCardSuit;
-    // string a = c1.getRankAsString();
-    // string b = c1.getSuitAsString();
-
-    return 0;
+        // print card rank and suit!
+        cout << c2.getRankAsString() << endl;
+        cout << c2.getSuitAsString() << endl;  
+    }
+  }
+  
+  return 0;
 }
