@@ -3,6 +3,7 @@
 // authors:	Jonathan, Cathal, Nidhu
 // date:	01.11.2014
 //////////////////////////////////////////////////////////////////////
+#include "card.h"
 #ifndef CARDDECK_H
 #define CARDDECK_H
 
@@ -23,15 +24,15 @@ class cardDeck
   	cardDeck(cardDeck &orig);
 
   	//Accessor 
-  	int &lookAtCard(int index) const;
-  	int &accessCard(int index);
+  	card &lookAtCard(int index) const;
+  	card &accessCard(int index);
   	const int getSize(){return size;};
 
   	//Mutator
   	void deleteCard();
   	void deleteCardDeck();
 
-  	void addCard(int card);
+  	void addCard(card c);
   	void shuffleDeck();
   	void initialiseCardDeck(int setNum);
 
@@ -41,11 +42,14 @@ class cardDeck
   	//Test Funtions 
   	void testListContents();
   	void fill();
+    void fillcards();
 
 
  private:
  void f(cardDeck deck);
+ // Pointers for array
  int *deck;
+ card *cdeck;
  int size;
 };
 

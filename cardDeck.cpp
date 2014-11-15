@@ -7,6 +7,7 @@
 #include <iostream>
 #include <exception>
 #include "cardDeck.h"
+#include "card.h"
 
 using namespace std;
 
@@ -22,7 +23,9 @@ cardDeck::cardDeck(int newSize)
 { 
   size = newSize;
   try {
-    deck = new int[size];
+    //deck = new int[size];
+    cdeck = new card[size];
+    //cdeck = new card[size]
   } catch (bad_alloc ex) {
     // report error to cerr and rethrow exception
     cerr << "Error when allocation memory in constructor "
@@ -39,23 +42,23 @@ cardDeck::cardDeck(int newSize)
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(cardDeck &orig)
 { 
-  try {
-    size = orig.size;
-    deck = new int[size];
+  // try {
+  //   size = orig.size;
+  //   deck = new int[52];
   
-    for (int i=0; i<size; i++)
-      deck[i] = orig.deck[i];
-  } catch (bad_alloc ex) {
+  //   for (int i=0; i<size; i++)
+  //     deck[i] = orig.deck[i];
+  // } catch (bad_alloc ex) {
 
-    //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    /// Need to change this to custom Exceptions class
-    //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //   /// Need to change this to custom Exceptions class
+  //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    // report error to cerr and rethrow exception
-    cerr << "Error when allocation memory in copy constructor "
-   << "dynArray(orig)\n";
-    throw ex;
-  }
+  //   // report error to cerr and rethrow exception
+  //   cerr << "Error when allocation memory in copy constructor "
+  //  << "dynArray(orig)\n";
+  //   throw ex;
+  // }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -69,7 +72,7 @@ cardDeck::cardDeck(cardDeck &orig)
 
 cardDeck::~cardDeck()
 {
-  delete[] deck;
+  delete[] cdeck;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -92,27 +95,34 @@ void cardDeck::deleteCard()
 // addCard()
 //////////////////////////////////////////////////////////////////////
 
-void cardDeck::addCard(int card)
+void cardDeck::addCard(card passedCard)
 {
   /*
   need to make sure that cards cant be added
   above 52
+
+  Also the delete function just 
+  make an index unaccessable
+  so test to make sure index are
+  just not hidden before wasting 
+  resouces --- Note to Self
+
   Correct Error handling too
   */
   int i;
-  int *newDeck;
+  card *newDeck;
   int newsize = size +1;
 
-  newDeck = new int[newsize];
+  newDeck = new card[newsize];
 
   for (i=0; i<newsize; i++) {
-    if (i<size) newDeck[i] = deck[i];
-    else newDeck[i] = card;
+    if (i<size) newDeck[i] = cdeck[i];
+    else newDeck[i] = passedCard;
   }
   // deallocate old memory
-  delete[] deck;
+  delete[] cdeck;
   // use newdata as data
-  deck = newDeck;
+  cdeck = newDeck;
   size = newsize;
 
 }
@@ -127,13 +137,14 @@ void cardDeck::addCard(int card)
 // parameter: index - index of element to be accessed
 //////////////////////////////////////////////////////////////////////
 
-int &cardDeck::lookAtCard(int index) const
+card &cardDeck::lookAtCard(int index) const
 {
-  return deck[index]; 
+  return cdeck[index]; 
 }
-int &cardDeck::accessCard(int index) 
+
+card &cardDeck::accessCard(int index) 
 {
-  return deck[index]; 
+  return cdeck[index]; 
 }
 
 
@@ -189,7 +200,19 @@ void cardDeck::createInitialisedCardDeck(int s)
 
 }
 
-
+void cardDeck::fillcards()
+{
+  int counter = 0;
+  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  {
+    for (int rank = card::Ace; rank <= card::King; ++rank)
+    {
+    counter = counter + 1;
+    card cc((card::Suit) suit, (card::Rank) rank); 
+    cdeck[counter] = cc;
+    }
+  }
+}
 
 //////////////////////////////////////////////////////////////////////
 // 
@@ -206,12 +229,22 @@ void cardDeck::testListContents()
     }
 }
 
+
 void cardDeck::fill()
 {
-    for (int i=0; i< size; ++i) 
+  int counter = 0;
+  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  {
+    for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-    deck[i] = i;
+    if (counter < size)
+    {
+    counter = counter + 1;
+    card cc((card::Suit) suit, (card::Rank) rank); 
+    cdeck[counter] = cc;}
     }
+  }
 }
+
 
 

@@ -16,7 +16,7 @@ public:
     typedef enum {Ace, Two, Three, Four, Five, Six,
                   Seven, Eight, Nine, Ten, Jack, Queen, King} Rank;
 
-
+    // Needed Generic/Default for object array decla
     card();
    // Create card of suit and rank
     card(Suit suit, Rank rank);
