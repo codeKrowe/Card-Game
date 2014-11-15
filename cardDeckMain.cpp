@@ -11,36 +11,36 @@ using namespace std;
 int main() 
 {
 
-  card c1(card::Spades, card::Ace);
-  card c2(card::Spades, card::Two);
-  card c3(card::Spades, card::Nine);
+  // card c1(card::Spades, card::Ace);
+  // card c2(card::Spades, card::Two);
+  // card c3(card::Spades, card::Nine);
 
-  int i,size, size2, newElem;
-	
-  cardDeck D1(4);
+  // int i,size, size2, newElem;
+  
+  // cardDeck D1(4);
 
  
 
-  D1.fill();
-  D1.addCard(c1);
+  // D1.fill();
+  // D1.addCard(c1);
 
-  cout << "***************" << endl;
-  for (int i = 0; i < D1.getSize() ;++i)
-  {
-    cout << "Card " << i << endl;
-   cout << D1.accessCard(i).getRankAsString() << endl;
-   cout << D1.accessCard(i).getSuitAsString() << endl;   
-  }
+  // cout << "***************" << endl;
+  // for (int i = 0; i < D1.getSize() ;++i)
+  // {
+  //   cout << "Card " << i << endl;
+  //  cout << D1.accessCard(i).getRankAsString() << endl;
+  //  cout << D1.accessCard(i).getSuitAsString() << endl;   
+  // }
 
-  D1.deleteCard();
-  cout << "********DELETE*******" << endl;
+  // D1.deleteCard();
+  // cout << "********DELETE*******" << endl;
 
-  for (int i = 0; i < D1.getSize() ;++i)
-  {
-    cout << "Card " << i << endl;
-   cout << D1.accessCard(i).getRankAsString() << endl;
-   cout << D1.accessCard(i).getSuitAsString() << endl;   
-  }  
+  // for (int i = 0; i < D1.getSize() ;++i)
+  // {
+  //   cout << "Card " << i << endl;
+  //  cout << D1.accessCard(i).getRankAsString() << endl;
+  //  cout << D1.accessCard(i).getSuitAsString() << endl;   
+  // }  
 
 
 
