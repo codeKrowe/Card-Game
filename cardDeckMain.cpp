@@ -42,6 +42,30 @@ int main()
    cout << D1.accessCard(i).getSuitAsString() << endl;   
   }  
 
+
+
+   cout << "*****SHUFFLE TEST *******" << endl;
+  cardDeck shuffleTest(52);
+  shuffleTest.fill();
+ cout << "***************" << endl;
+  cout << "***************" << endl;
+  for (int i = 0; i < shuffleTest.getSize() ;++i)
+  {
+    cout << "Card " << i << endl;
+   cout << shuffleTest.accessCard(i).getRankAsString() << endl;
+   cout << shuffleTest.accessCard(i).getSuitAsString() << endl;   
+  }
+
+  shuffleTest.shuffleDeck();
+
+    cout << "***************" << endl;
+  for (int i = 0; i < shuffleTest.getSize() ;++i)
+  {
+    cout << "Card " << i << endl;
+   cout << shuffleTest.accessCard(i).getRankAsString() << endl;
+   cout << shuffleTest.accessCard(i).getSuitAsString() << endl;   
+  }
+
   // for (int i = 0; i < D1.getSize() ;++i)
   // {
   // 	cout << D1.accessCard(i) << endl;

@@ -8,6 +8,10 @@
 #include <exception>
 #include "cardDeck.h"
 #include "card.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 
 using namespace std;
 
@@ -173,8 +177,16 @@ return destination;
 
 void cardDeck::shuffleDeck()
 {
-
+    srand (time(0));
+    for (int i = 52-1; i > 0; i--)
+    {
+        int r = rand() % (i+1);
+        card temp = cdeck[i];
+        cdeck[i] = cdeck[r];
+        cdeck[r] = temp;
+    }
 }
+
 
 //////////////////////////////////////////////////////////////////////
 //initialiseCardDeck(int setNum)

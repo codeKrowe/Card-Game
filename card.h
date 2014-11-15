@@ -38,6 +38,7 @@ public:
 private:
     Rank rank;
     Suit suit;
+    card *ptr;
 };
 
 #endif

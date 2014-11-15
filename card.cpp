@@ -10,6 +10,8 @@ card::card()
 {
 }
 
+
+
 card::card(Suit newSuit, Rank newRank)
 {
     suit = newSuit;
