@@ -17,9 +17,11 @@ public:
                   Seven, Eight, Nine, Ten, Jack, Queen, King} Rank;
 
 
-
+    card();
    // Create card of suit and rank
     card(Suit suit, Rank rank);
+    //default constructor required for custom onject array
+
 
     // Accessors
     inline Rank getCardRank() {return rank;}
@@ -34,8 +36,10 @@ public:
     std::string getSuitAsString();
 
 private:
+    void f(card c);
     Rank rank;
     Suit suit;
+    card *cdeck;
 };
 
 #endif

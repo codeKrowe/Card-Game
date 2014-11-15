@@ -5,6 +5,14 @@
 #include "card.h"
 using namespace std;
 
+
+card::card()
+{
+    suit = card::Spades;
+
+    rank = card::Ace;
+}
+
 card::card(Suit newSuit, Rank newRank)
 {
     suit = newSuit;
