@@ -8,9 +8,6 @@
 #include <exception>
 #include "cardDeck.h"
 #include "card.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 
 using namespace std;
@@ -236,7 +233,6 @@ void cardDeck::testListContents()
 {
     for (int i=0; i<size+2; ++i) 
     {
-    cout << deck[i] << endl;
 
     }
 }
@@ -251,9 +247,10 @@ void cardDeck::fill()
     {
     if (counter < size)
     {
-    counter = counter + 1;
+
     card cc((card::Suit) suit, (card::Rank) rank); 
     cdeck[counter] = cc;}
+    counter = counter + 1;
     }
   }
 }
