@@ -36,10 +36,8 @@ public:
     std::string getSuitAsString();
 
 private:
-    void f(card c);
     Rank rank;
     Suit suit;
-    card *cdeck;
 };
 
 #endif
