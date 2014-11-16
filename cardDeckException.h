@@ -7,16 +7,14 @@ using std::string;
 
 class cardDeckException{
 
-
-
 public:
 cardDeckException();
 cardDeckException(std::string str);
 std::string getException();
 
-
 private:
 std::string exceptionName;
+std::string sizeErr;
 };
 
 
