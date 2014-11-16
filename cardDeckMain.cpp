@@ -45,9 +45,12 @@ int main()
 
 
 
-
+  card c1(card::Spades, card::Ace);
   cardDeck shuffleTest(52);
   shuffleTest.fill();
+
+  // Will throw an exception to custom class cause too big
+  shuffleTest.addCard(c1);
 
   for (int i = 0; i < shuffleTest.getSize() ;++i)
   {

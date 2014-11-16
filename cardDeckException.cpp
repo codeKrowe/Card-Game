@@ -6,6 +6,7 @@ using namespace std;
 cardDeckException::cardDeckException()
 {
 	exceptionName = "Unspecified CardDeck Exception";
+	sizeErr = "Size is incorrect";
 }
 
 

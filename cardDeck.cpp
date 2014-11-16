@@ -8,6 +8,7 @@
 #include <exception>
 #include "cardDeck.h"
 #include "card.h"
+#include "cardDeckException.h"
 
 
 using namespace std;
@@ -29,8 +30,8 @@ cardDeck::cardDeck(int newSize)
     //cdeck = new card[size]
   } catch (bad_alloc ex) {
     // report error to cerr and rethrow exception
-    cerr << "Error when allocation memory in constructor "
-    << "dynArray(newsize)\n";
+    cerr << "Error with allocation of memory "
+    << "deck(newsize)\n";
     throw ex;
   }
 }
@@ -43,23 +44,11 @@ cardDeck::cardDeck(int newSize)
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(cardDeck &orig)
 { 
-  // try {
-  //   size = orig.size;
-  //   deck = new int[52];
-  
-  //   for (int i=0; i<size; i++)
-  //     deck[i] = orig.deck[i];
-  // } catch (bad_alloc ex) {
 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //   /// Need to change this to custom Exceptions class
+  //   /// Need to change this to custom COPY
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  //   // report error to cerr and rethrow exception
-  //   cerr << "Error when allocation memory in copy constructor "
-  //  << "dynArray(orig)\n";
-  //   throw ex;
-  // }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -89,7 +78,17 @@ void cardDeck::deleteCard()
   // processing copying
   //
   // Simple and effective
-  if (size > 0){size = size-1;}
+
+  // if (size > 0){size = size-1;}
+  try {
+        size = size - 1;
+        if(size < 0)
+        {throw cardDeckException("Size in the negative -- incorrect");}
+      }
+        catch(cardDeckException ex)
+        {cout << ex.getException() << endl; ++size;}
+  
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -112,19 +111,28 @@ void cardDeck::addCard(card passedCard)
   */
   int i;
   card *newDeck;
-  int newsize = size +1;
 
-  newDeck = new card[newsize];
+  try{
+      int newsize = size +1;
+      if (newsize > 52)
+      {throw cardDeckException("Size is incorrect");}
 
-  for (i=0; i<newsize; i++) {
-    if (i<size) newDeck[i] = cdeck[i];
-    else newDeck[i] = passedCard;
-  }
-  // deallocate old memory
-  delete[] cdeck;
-  // use newdata as data
-  cdeck = newDeck;
-  size = newsize;
+      newDeck = new card[newsize];
+      for (i=0; i<newsize; i++)
+        {
+        if (i<size) newDeck[i] = cdeck[i];
+        else newDeck[i] = passedCard;
+        }
+        // deallocate old memory
+        delete[] cdeck;
+        // use newdata as data
+        cdeck = newDeck;
+        size = newsize;
+      }
+  catch(cardDeckException ex)
+  {cout << ex.getException() << endl;size = size - 1;}
+  catch (bad_alloc memex) 
+  {cerr << "Memory allocation Issue"  << endl;throw memex;}
 
 }
 
@@ -181,9 +189,10 @@ return destination;
 //This swaps at random, and so it doesnt matter if the same index
 //is swaped at some stage as both index objects
 //remain in the Deck regardless.
+//The counter decrements
 //
 //pre:a valid Deck exists
-//post:the contents of that deck have been shuffled in position
+//post:the contents of that deck have been shuffled
 //////////////////////////////////////////////////////////////////////
 
 void cardDeck::shuffleDeck()
