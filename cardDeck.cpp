@@ -170,6 +170,20 @@ return destination;
 
 //////////////////////////////////////////////////////////////////////
 // shuffleDeck()
+//
+//
+//Uses a starting seed from time and generates a random sequence
+//this sequecnce does not end up distributing uniformly
+//when attempting to generate a 52 number sequence, 
+//so an "Mangled" Bubble swap has been used, where one
+//side of the swap is a random number(r) in range up to the 
+//current counter postition counter (i).
+//This swaps at random, and so it doesnt matter if the same index
+//is swaped at some stage as both index objects
+//remain in the Deck regardless.
+//
+//pre:a valid Deck exists
+//post:the contents of that deck have been shuffled in position
 //////////////////////////////////////////////////////////////////////
 
 void cardDeck::shuffleDeck()
