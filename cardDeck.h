@@ -32,8 +32,8 @@ class cardDeck
   	void deleteCardDeck();
   	void addCard(card c);
   	void shuffleDeck();
-  	void initialiseCardDeck(int setNum);
-  	void createInitialisedCardDeck(int num);
+  	void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);
+    void createInitialisedCardDeck(int NumSets);
   	int &moveAllCards(int &destination);
 
   	//Test Functions
@@ -44,11 +44,20 @@ class cardDeck
     void deleteCard();
     const int getSize(){return size;};
 
+<<<<<<< HEAD
   private:
     void f(cardDeck deck);
     // Pointers for array
     card *cdeck;
     int size;
+=======
+ private:
+ void f(cardDeck deck);
+ // Pointers for array
+ card **cardDeckContainer;
+ card *cdeck;
+ int size;
+>>>>>>> 1dfe0e67c346f71c9c728ae4aaaca69e6591843e
 };
 
 #endif
