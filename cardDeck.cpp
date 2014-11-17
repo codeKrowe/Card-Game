@@ -27,7 +27,7 @@ cardDeck::cardDeck()
 
   // Allocate 52 spaces for card objects.
   cdeck = new card[52];
-  //deckContainer = new cardDeck[1];
+  //deckContainer = new cardDeck[23];
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -66,10 +66,10 @@ cardDeck::cardDeck(cardDeck &orig)
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   try {
     size = orig.size;
-    deckContainer = new cardDeck[size];
+    cdeck = new card[size];
   
     for (int i=0; i<size; i++)
-      deckContainer[i] = orig.deckContainer[i];
+      cdeck[i] = orig.cdeck[i];
   } catch (bad_alloc ex) {
     // report error to cerr and rethrow exception
     cerr << "Error when allocation memory in copy constructor "
@@ -89,8 +89,9 @@ cardDeck::cardDeck(cardDeck &orig)
 
 cardDeck::~cardDeck()
 {
+	//delete[] deckContainer;
   delete[] cdeck;
-  //delete[] deckContainer;
+
 }
 
 //////////////////////////////////////////////////////////////////////
