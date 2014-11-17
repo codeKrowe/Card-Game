@@ -10,12 +10,12 @@ int main()
   /* Test Card Class */
 
   // Creates a single card
-  card c1(card::Spades, card::Ace);
-  cout << "Card created..." << endl;
+  // card c1(card::Spades, card::Ace);
+  // cout << "Card created..." << endl;
 
-  // Print out cards suit and rank in string format!
-  cout << c1.getRankAsString() << endl;
-  cout << c1.getSuitAsString() << endl;
+  // // Print out cards suit and rank in string format!
+  // cout << c1.getRankAsString() << endl;
+  // cout << c1.getSuitAsString() << endl;
 
   /////////////////////////////////
 
@@ -23,16 +23,43 @@ int main()
   /* Creating an empty deck */
 
   // Create a cardDeck.
-  cardDeck cd1;
+  // cout << "...Deck 1..." << endl;
+  // cardDeck d1;
 
-  // Get number of cards in empty deck.
-  cout << "Number of cards: " << cd1.getNumberOfCards() <<  endl;
+  // // Get number of cards in empty deck.
+  // cout << "Number of cards: " << d1.getNumberOfCards() <<  endl;
 
-  // Add card to empty deck.
-  cd1.addCard(c1);
+  // // Add card to empty deck.
+  // d1.addCard(c1);
 
-  // Get number of cards in deck after 1 card is added.
-  cout << "Number of cards: " << cd1.getNumberOfCards() <<  endl;
+  // // Get number of cards in deck after 1 card is added.
+  // cout << "Number of cards: " << d1.getNumberOfCards() <<  endl;
+
+
+  /* Test moveAllCards() */
+  cout << "...Deck 2 & Deck 3..." << endl;
+
+  cardDeck *d2;
+  // d1.addCard(c1);
+  cardDeck *d3;
+
+  int counter = 0;
+  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  {
+    for (int rank = card::Ace; rank <= card::King; ++rank)
+    {
+        counter = counter + 1;
+        // must cast the suit and rank integers back to enum type
+        card c2((card::Suit) suit, (card::Rank) rank);
+        d2->addCard(c2);
+    }
+  }
+
+  cardDeck::moveAllCards(d2, d3);
+
+  cout << "Size after move" << endl;
+  cout << "deck 1: " << d2->getSize() << endl;
+  cout << "deck 2: " << d3->getSize() << endl;
 
   /* Create a deck dynamically and fill */
 
@@ -81,29 +108,29 @@ int main()
 
   // int i,size, size2, newElem;
 
-  // cardDeck D1(4);
+  // cardDeck D3;
 
-
-
-  // D1.fill();
-  // D1.addCard(c1);
+  // D3.fill();
+  // cout << "...Deck 3..." << endl;
+  // cout << D3.getSize() << endl;
+  // // D1.addCard(c1);
 
   // cout << "***************" << endl;
-  // for (int i = 0; i < D1.getSize() ;++i)
+  // for (int i = 0; i < D3.getSize() ;++i)
   // {
   //   cout << "Card " << i << endl;
-  //  cout << D1.accessCard(i).getRankAsString() << endl;
-  //  cout << D1.accessCard(i).getSuitAsString() << endl;
+  //  cout << D3.accessCard(i).getRankAsString() << endl;
+  //  cout << D3.accessCard(i).getSuitAsString() << endl;
   // }
 
-  // D1.deleteCard();
+  // D3.deleteCard();
   // cout << "********DELETE*******" << endl;
 
-  // for (int i = 0; i < D1.getSize() ;++i)
+  // for (int i = 0; i < D3.getSize() ;++i)
   // {
   //   cout << "Card " << i << endl;
-  //  cout << D1.accessCard(i).getRankAsString() << endl;
-  //  cout << D1.accessCard(i).getSuitAsString() << endl;
+  //  cout << D3.accessCard(i).getRankAsString() << endl;
+  //  cout << D3.accessCard(i).getSuitAsString() << endl;
   // }
 
 

@@ -78,6 +78,7 @@ cardDeck::cardDeck(cardDeck &orig)
 cardDeck::~cardDeck()
 {
   delete[] cdeck;
+  size = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -264,9 +265,42 @@ card &cardDeck::lookAtCard(int index) const
 //to destination (which now contains additionally all cards previously in source)
 //////////////////////////////////////////////////////////////////////
 
-int &cardDeck::moveAllCards(int &destination)
+void cardDeck::moveAllCards(cardDeck *source, cardDeck *destination)
 {
-  return destination;
+  // pass in 2 decks.
+  // check if source deck size > 0
+  // start looping through the source deck.
+    // copy object over to destination deck.
+  // after all cards are copied over, delete cards from source
+
+  cout << "...In moveAllCards..." << endl;
+
+  int sourceSize = source->getSize();
+  int destSize = destination->getSize();
+  cout << "Size of source deck before move:" << source->getSize() << endl;
+  cout << "Size of dest deck before move: " << destination->getSize() << endl;
+
+  if (source->getSize() > 0)
+  {
+    for (int i = 0; i < sourceSize; ++i)
+    {
+      // get card in source deck at position i
+      card c = source->lookAtCard(i);
+
+      // cout << c.getSuitAsString() << " " << c.getRankAsString() << " " << i << endl;
+
+      // add i'th card to destination deck
+      destination->addCard(c);
+    }
+      // all cards moved over, delete source deck
+    cout << "Size of source deck after move: " << source->getSize() << endl;
+    cout << "Size of dest deck after move: " << destination->getSize() << endl;
+    // delete source;
+  }
+  else
+  {
+    throw cardDeckException("Error No Cards in Source Deck!!");
+  }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -344,9 +378,10 @@ void cardDeck::fill()
       if (counter < size)
       {
         card cc((card::Suit) suit, (card::Rank) rank);
-        cdeck[counter] = cc;}
-        counter = counter + 1;
+        cdeck[counter] = cc;
       }
+        counter = counter + 1;
+    }
   }
 }
 

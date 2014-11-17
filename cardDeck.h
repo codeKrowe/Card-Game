@@ -34,7 +34,8 @@ class cardDeck
     void shuffleDeck();
     void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);
     void createInitialisedCardDeck(int NumSets);
-    int &moveAllCards(int &destination);
+    // int &moveAllCards(int &destination);
+    static void moveAllCards(cardDeck *source, cardDeck *Destination);
 
     //Test Functions
     void testListContents();
