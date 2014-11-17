@@ -65,6 +65,18 @@ cardDeck::~cardDeck()
   delete[] cdeck;
 }
 
+
+int cardDeck::getNumberOfCards() const
+{
+  return size;
+}
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////
 // deleteCard()
 //////////////////////////////////////////////////////////////////////
@@ -90,6 +102,41 @@ void cardDeck::deleteCard()
   
 
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// deleteCard()
+//////////////////////////////////////////////////////////////////////
+
+
+card cardDeck::getACard()
+{
+  // If less that the current size
+  // then it is better to just reduce the
+  // index total size rather than waste
+  // processing copying
+  //
+  // Simple and effective
+
+  // if (size > 0){size = size-1;}
+
+  card temp;
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // THIS THROWS TO MAIN --- Needs Matching CATCH
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  try {
+        int size2 = size - 1; 
+        if(size2 < 0)
+        {throw cardDeckException("Size in the negative -- incorrect");}
+      else {temp= cdeck[size];size = size - 1;}
+      }
+        catch(cardDeckException ex)
+        {cout << ex.getException() << endl;}
+
+        return temp;
+    }
+
 
 //////////////////////////////////////////////////////////////////////
 // addCard()
@@ -148,12 +195,9 @@ void cardDeck::addCard(card passedCard)
 
 card &cardDeck::lookAtCard(int index) const
 {
-  return cdeck[index]; 
-}
-
-card &cardDeck::accessCard(int index) 
-{
-  return cdeck[index]; 
+  if (index > size){throw cardDeckException("Index out of range");}
+  else {return cdeck[index];} 
+  return cdeck[index];
 }
 
 
@@ -277,6 +321,13 @@ void cardDeck::fill()
     }
   }
 }
+
+
+card &cardDeck::accessCard(int index) 
+{
+  return cdeck[index]; 
+}
+
 
 
 

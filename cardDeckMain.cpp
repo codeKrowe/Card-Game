@@ -3,6 +3,7 @@
 #include "cardDeck.h"
 #include "card.h"
 #include <string>
+#include "cardDeckException.h"
 
 using namespace std;
 
@@ -10,6 +11,24 @@ using namespace std;
 
 int main() 
 {
+
+
+  cardDeck D1(4);
+  D1.fill();
+  // cout << D1.getSize() << endl;
+  // cout << D1.getACard().getRankAsString() << endl;
+  // cout << D1.getSize() << endl;
+  // cout << D1.getACard().getRankAsString() << endl;
+  // cout << D1.getACard().getRankAsString() << endl;
+  // cout << D1.getACard().getRankAsString() << endl;
+  // cout << D1.getSize() << endl;
+  // cout << D1.getACard().getRankAsString() << endl;
+
+
+
+
+
+
 
   // card c1(card::Spades, card::Ace);
   // card c2(card::Spades, card::Two);
@@ -45,35 +64,45 @@ int main()
 
 
 
-  card c1(card::Spades, card::Ace);
-  cardDeck shuffleTest(52);
-  shuffleTest.fill();
-
-  // Will throw an exception to custom class cause too big
-  shuffleTest.addCard(c1);
-
-  for (int i = 0; i < shuffleTest.getSize() ;++i)
-  {
-    cout << "Card " << i << endl;
-   cout << shuffleTest.accessCard(i).getRankAsString() << endl;
-   cout << shuffleTest.accessCard(i).getSuitAsString() << endl;   
-  }
+ //  card c1(card::Spades, card::Ace);
+ //  cardDeck shuffleTest(52);
+ //  shuffleTest.fill();
 
 
 
-  cout << "*****SHUFFLE TEST *******" << endl;
- cout << "***************" << endl;
-  cout << "***************" << endl;
+ //  // test for error handling in LookatCard
+ //  try{
+ //  shuffleTest.lookAtCard(53);
+ //  }
+ //  catch(cardDeckException ex){cout << ex.getException() <<endl;}
+ //  // Will throw an exception to custom class cause too big
+ //  // shuffleTest.addCard(c1);
 
-  shuffleTest.shuffleDeck();
 
-    cout << "***************" << endl;
-  for (int i = 0; i < shuffleTest.getSize() ;++i)
-  {
-    cout << "Card " << i << endl;
-   cout << shuffleTest.accessCard(i).getRankAsString() << endl;
-   cout << shuffleTest.accessCard(i).getSuitAsString() << endl;   
-  }
+
+
+ //  for (int i = 0; i < shuffleTest.getSize() ;++i)
+ //  {
+ //    cout << "Card " << i << endl;
+ //   cout << shuffleTest.accessCard(i).getRankAsString() << endl;
+ //   cout << shuffleTest.accessCard(i).getSuitAsString() << endl;   
+ //  }
+
+
+
+ //  cout << "*****SHUFFLE TEST *******" << endl;
+ // cout << "***************" << endl;
+ //  cout << "***************" << endl;
+
+ //  shuffleTest.shuffleDeck();
+
+ //    cout << "***************" << endl;
+ //  for (int i = 0; i < shuffleTest.getSize() ;++i)
+ //  {
+ //    cout << "Card " << i << endl;
+ //   cout << shuffleTest.accessCard(i).getRankAsString() << endl;
+ //   cout << shuffleTest.accessCard(i).getSuitAsString() << endl;   
+ //  }
 
 
 

@@ -25,30 +25,29 @@ class cardDeck
 
   	//Accessor 
   	card &lookAtCard(int index) const;
-  	card &accessCard(int index);
-  	const int getSize(){return size;};
-
+    int getNumberOfCards() const;
   	//Mutator
-  	void deleteCard();
+    card getACard();
+    card lookAtCard() const;
   	void deleteCardDeck();
-
   	void addCard(card c);
   	void shuffleDeck();
   	void initialiseCardDeck(int setNum);
-
   	void createInitialisedCardDeck(int num);
-
   	int &moveAllCards(int &destination);
-  	//Test Funtions 
+
+
+  	//Test Functions 
   	void testListContents();
   	void fill();
     void fillcards();
-
+    card &accessCard(int index);
+    void deleteCard();
+    const int getSize(){return size;};
 
  private:
  void f(cardDeck deck);
  // Pointers for array
- int *deck;
  card *cdeck;
  int size;
 };
