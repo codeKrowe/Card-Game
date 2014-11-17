@@ -32,8 +32,8 @@ class cardDeck
   	void deleteCardDeck();
   	void addCard(card c);
   	void shuffleDeck();
-  	void initialiseCardDeck(int setNum);
-  	void createInitialisedCardDeck(int num);
+  	void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);
+    void createInitialisedCardDeck(int NumSets);
   	int &moveAllCards(int &destination);
 
 
@@ -48,6 +48,7 @@ class cardDeck
  private:
  void f(cardDeck deck);
  // Pointers for array
+ card **cardDeckContainer;
  card *cdeck;
  int size;
 };

@@ -65,6 +65,10 @@ cardDeck::~cardDeck()
   delete[] cdeck;
 }
 
+//////////////////////////////////////////////////////////////////////
+//getNumberOfCards()
+//////////////////////////////////////////////////////////////////////
+
 
 int cardDeck::getNumberOfCards() const
 {
@@ -72,9 +76,50 @@ int cardDeck::getNumberOfCards() const
 }
 
 
+//////////////////////////////////////////////////////////////////////
+//initialiseCardDeck(int setNum)
+//////////////////////////////////////////////////////////////////////
+
+void cardDeck::initialiseCardDeck(int setNumSets/*,cardDeck deck*/)
+{
+
+  /// Should be code here to create setNumsets amount of decks
+  // and fill them 
+  int counter = 0;
+  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  {
+    for (int rank = card::Ace; rank <= card::King; ++rank)
+    {
+    if (counter < size)
+    {
+
+    card cc((card::Suit) suit, (card::Rank) rank); 
+    cdeck[counter] = cc;}
+    counter = counter + 1;
+    }
+  }
+
+}
 
 
 
+void cardDeck::createInitialisedCardDeck(int s)
+{
+  int counter = 0;
+  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  {
+    for (int rank = card::Ace; rank <= card::King; ++rank)
+    {
+    if (counter < size)
+    {
+
+    card cc((card::Suit) suit, (card::Rank) rank); 
+    cdeck[counter] = cc;}
+    counter = counter + 1;
+    }
+  }
+
+}
 
 
 //////////////////////////////////////////////////////////////////////
@@ -252,15 +297,6 @@ void cardDeck::shuffleDeck()
 }
 
 
-//////////////////////////////////////////////////////////////////////
-//initialiseCardDeck(int setNum)
-//////////////////////////////////////////////////////////////////////
-
-void cardDeck::initialiseCardDeck(int setNum)
-{
-
-
-}
 
 
 void cardDeck::deleteCardDeck()
@@ -270,11 +306,6 @@ void cardDeck::deleteCardDeck()
 }
 
 
-void cardDeck::createInitialisedCardDeck(int s)
-{
-
-
-}
 
 void cardDeck::fillcards()
 {
