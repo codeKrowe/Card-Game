@@ -300,23 +300,11 @@ void cardDeck::shuffleDeck()
     }
 }
 
-//////////////////////////////////////////////////////////////////////
-//initialiseCardDeck(int setNum)
-//////////////////////////////////////////////////////////////////////
-
-void cardDeck::initialiseCardDeck(int setNum)
-{
-
-
-}
-
-
 void cardDeck::deleteCardDeck()
 {
 
 
 }
-
 
 void cardDeck::fillcards()
 {
