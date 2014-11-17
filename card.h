@@ -1,18 +1,19 @@
 // Definition of a card class
 //
 // Contains very basic card structure.
-
 #ifndef CARD_H
 #define CARD_H
 
 #include <string>
 
+using std::string;
+
 class card
 {
 public:
-    
+
     typedef enum  {Clubs, Spades, Hearts, Diamonds} Suit;
-    
+
     typedef enum {Ace, Two, Three, Four, Five, Six,
                   Seven, Eight, Nine, Ten, Jack, Queen, King} Rank;
 
@@ -32,8 +33,8 @@ public:
     inline void setCardSuit(Suit suit) {suit = suit;}
 
     // Method to get ranks and suits as strings.
-    std::string getRankAsString();
-    std::string getSuitAsString();
+    string getRankAsString();
+    string getSuitAsString();
 
 private:
     Rank rank;

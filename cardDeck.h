@@ -1,29 +1,29 @@
-// 
+//
 //
 // authors:	Jonathan, Cathal, Nidhu
 // date:	01.11.2014
 //////////////////////////////////////////////////////////////////////
-#include "card.h"
 #ifndef CARDDECK_H
 #define CARDDECK_H
 
+#include "card.h"
 
-class cardDeck  
+class cardDeck
 {
- public:
- 	//Default
- 	cardDeck();
+  public:
+   	//Default
+   	cardDeck();
 
- 	//Destructor
- 	~cardDeck();
+   	//Destructor
+   	~cardDeck();
 
- 	//Generic
- 	cardDeck(int size);
+   	//Generic
+   	cardDeck(int size);
 
- 	// copy constructor
+   	// copy constructor
   	cardDeck(cardDeck &orig);
 
-  	//Accessor 
+  	//Accessor
   	card &lookAtCard(int index) const;
     int getNumberOfCards() const;
   	//Mutator
@@ -36,8 +36,7 @@ class cardDeck
   	void createInitialisedCardDeck(int num);
   	int &moveAllCards(int &destination);
 
-
-  	//Test Functions 
+  	//Test Functions
   	void testListContents();
   	void fill();
     void fillcards();
@@ -45,11 +44,11 @@ class cardDeck
     void deleteCard();
     const int getSize(){return size;};
 
- private:
- void f(cardDeck deck);
- // Pointers for array
- card *cdeck;
- int size;
+  private:
+    void f(cardDeck deck);
+    // Pointers for array
+    card *cdeck;
+    int size;
 };
 
-#endif 
+#endif

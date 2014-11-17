@@ -1,16 +1,12 @@
 // Definition of a card class
 //
 // Contains very basic card structure.
-
 #include "card.h"
-using namespace std;
-
 
 card::card()
 {
+
 }
-
-
 
 card::card(Suit newSuit, Rank newRank)
 {

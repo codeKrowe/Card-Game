@@ -1,7 +1,4 @@
-#include <iostream>
 #include "cardDeckException.h"
-
-using namespace std;
 
 cardDeckException::cardDeckException()
 {
@@ -10,12 +7,13 @@ cardDeckException::cardDeckException()
 }
 
 
-cardDeckException::cardDeckException(std::string name)
+cardDeckException::cardDeckException(string name)
 {
 	exceptionName = name;
 }
 
-std::string cardDeckException::getException(){
+string cardDeckException::getException()
+{
 	return exceptionName;
 }
 

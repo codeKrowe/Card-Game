@@ -1,21 +1,22 @@
-#include <iostream>
-
 #ifndef CARDDECKEXCEPTION_H
 #define CARDDECKEXCEPTION_H
 
+#include <string>
+#include <exception>
+
 using std::string;
 
-class cardDeckException{
+class cardDeckException
+{
 
-public:
-cardDeckException();
-cardDeckException(std::string str);
-std::string getException();
+  public:
+    cardDeckException();
+    cardDeckException(string str);
+    string getException();
 
-private:
-std::string exceptionName;
-std::string sizeErr;
+  private:
+    string exceptionName;
+    string sizeErr;
 };
-
 
 #endif

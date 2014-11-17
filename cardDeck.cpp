@@ -1,28 +1,43 @@
-// 
+//
 //
 // authors:	Jonathan, Cathal, Nidhu
 // date:	01.11.2014
 //////////////////////////////////////////////////////////////////////
-
+#include <cstdlib>
 #include <iostream>
-#include <exception>
-#include "cardDeck.h"
 #include "card.h"
+#include "cardDeck.h"
 #include "cardDeckException.h"
-
 
 using namespace std;
 
+///////////////////////////////////////////////////////////////////////
+// cardDeck() - createEmptyCardDeck()
+//    Deafult constructor
+// Pre: None
+// Post: An Empty deck is created.
+///////////////////////////////////////////////////////////////////////
+cardDeck::cardDeck()
+{
+  // No need to create a dynamic array since empty
+  // card deck will have 52 memory slots allocated to it.
+
+  // Set size to zero to note the deck is "empty"
+  size = 0;
+
+  // Allocate 52 spaces for card objects.
+  cdeck[52];
+}
+
 //////////////////////////////////////////////////////////////////////
 // cardDeck(newsize, initvalue=0)
-// constructor to create a new dynamic deck with size newsize 
+// constructor to create a new dynamic deck with size newsize
 // if memory cannot be allocated, exception is thrown
 //
 // parameter: newsize - size of dynamic array
 //////////////////////////////////////////////////////////////////////
-
 cardDeck::cardDeck(int newSize)
-{ 
+{
   size = newSize;
   try {
     //deck = new int[size];
@@ -43,7 +58,7 @@ cardDeck::cardDeck(int newSize)
 // parameter: orig - reference to original deck
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(cardDeck &orig)
-{ 
+{
 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //   /// Need to change this to custom COPY
@@ -53,7 +68,7 @@ cardDeck::cardDeck(cardDeck &orig)
 
 //////////////////////////////////////////////////////////////////////
 // ~cardDeck()
-// destructor for class - frees up 
+// destructor for class - frees up
 // the dynamically allocated
 // memory
 //
@@ -71,16 +86,9 @@ int cardDeck::getNumberOfCards() const
   return size;
 }
 
-
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////
 // deleteCard()
 //////////////////////////////////////////////////////////////////////
-
 
 void cardDeck::deleteCard()
 {
@@ -99,15 +107,13 @@ void cardDeck::deleteCard()
       }
         catch(cardDeckException ex)
         {cout << ex.getException() << endl; ++size;}
-  
+
 
 }
-
 
 //////////////////////////////////////////////////////////////////////
 // deleteCard()
 //////////////////////////////////////////////////////////////////////
-
 
 card cardDeck::getACard()
 {
@@ -126,7 +132,7 @@ card cardDeck::getACard()
   // THIS THROWS TO MAIN --- Needs Matching CATCH
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   try {
-        int size2 = size - 1; 
+        int size2 = size - 1;
         if(size2 < 0)
         {throw cardDeckException("Size in the negative -- incorrect");}
       else {temp= cdeck[size];size = size - 1;}
@@ -136,7 +142,6 @@ card cardDeck::getACard()
 
         return temp;
     }
-
 
 //////////////////////////////////////////////////////////////////////
 // addCard()
@@ -148,10 +153,10 @@ void cardDeck::addCard(card passedCard)
   need to make sure that cards cant be added
   above 52
 
-  Also the delete function just 
+  Also the delete function just
   make an index unaccessable
   so test to make sure index are
-  just not hidden before wasting 
+  just not hidden before wasting
   resouces --- Note to Self
 
   Correct Error handling too
@@ -178,7 +183,7 @@ void cardDeck::addCard(card passedCard)
       }
   catch(cardDeckException ex)
   {cout << ex.getException() << endl;size = size - 1;}
-  catch (bad_alloc memex) 
+  catch (bad_alloc memex)
   {cerr << "Memory allocation Issue"  << endl;throw memex;}
 
 }
@@ -187,7 +192,7 @@ void cardDeck::addCard(card passedCard)
 // lookAtCard(index)
 // provides access (both reading and writing) to the top element
 // of the card deck.
-// 
+//
 // Does not modify the Deck
 //
 // parameter: index - index of element to be accessed
@@ -196,28 +201,27 @@ void cardDeck::addCard(card passedCard)
 card &cardDeck::lookAtCard(int index) const
 {
   if (index > size){throw cardDeckException("Index out of range");}
-  else {return cdeck[index];} 
+  else {return cdeck[index];}
   return cdeck[index];
 }
 
-
 ///////////////////////////////////////////////////////////
 //
-// Incomplete Funtions 
+// Incomplete Funtions
 //////////////////////
 
 //////////////////////////////////////////////////////////////////////
-//moveAllCards(destination): Moves all cards 
+//moveAllCards(destination): Moves all cards
 //from the CardDeck source to CardDeck destination.
 //
 //Pre: source and destination are valid instantiations of the ADT CardDeck.
-//Post: All cards have been moved from source (which now is empty) 
+//Post: All cards have been moved from source (which now is empty)
 //to destination (which now contains additionally all cards previously in source)
 //////////////////////////////////////////////////////////////////////
 
 int &cardDeck::moveAllCards(int &destination)
 {
-return destination;
+  return destination;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -226,9 +230,9 @@ return destination;
 //
 //Uses a starting seed from time and generates a random sequence
 //this sequecnce does not end up distributing uniformly
-//when attempting to generate a 52 number sequence, 
+//when attempting to generate a 52 number sequence,
 //so an "Mangled" Bubble swap has been used, where one
-//side of the swap is a random number(r) in range up to the 
+//side of the swap is a random number(r) in range up to the
 //current counter postition counter (i).
 //This swaps at random, and so it doesnt matter if the same index
 //is swaped at some stage as both index objects
@@ -244,13 +248,12 @@ void cardDeck::shuffleDeck()
     srand (time(0));
     for (int i = 52-1; i > 0; i--)
     {
-        int r = rand() % (i+1);
-        card temp = cdeck[i];
-        cdeck[i] = cdeck[r];
-        cdeck[r] = temp;
+      int r = rand() % (i+1);
+      card temp = cdeck[i];
+      cdeck[i] = cdeck[r];
+      cdeck[r] = temp;
     }
 }
-
 
 //////////////////////////////////////////////////////////////////////
 //initialiseCardDeck(int setNum)
@@ -283,27 +286,26 @@ void cardDeck::fillcards()
   {
     for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-    counter = counter + 1;
-    card cc((card::Suit) suit, (card::Rank) rank); 
-    cdeck[counter] = cc;
+      counter = counter + 1;
+      card cc((card::Suit) suit, (card::Rank) rank);
+      cdeck[counter] = cc;
     }
   }
 }
 
 //////////////////////////////////////////////////////////////////////
-// 
+//
 // Development Testing Funtions
 //
 //////////////////////////////////////////////////////////////////////
 
 void cardDeck::testListContents()
 {
-    for (int i=0; i<size+2; ++i) 
+    for (int i=0; i<size+2; ++i)
     {
 
     }
 }
-
 
 void cardDeck::fill()
 {
@@ -312,22 +314,16 @@ void cardDeck::fill()
   {
     for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-    if (counter < size)
-    {
-
-    card cc((card::Suit) suit, (card::Rank) rank); 
-    cdeck[counter] = cc;}
-    counter = counter + 1;
-    }
+      if (counter < size)
+      {
+        card cc((card::Suit) suit, (card::Rank) rank);
+        cdeck[counter] = cc;}
+        counter = counter + 1;
+      }
   }
 }
 
-
-card &cardDeck::accessCard(int index) 
+card &cardDeck::accessCard(int index)
 {
-  return cdeck[index]; 
+  return cdeck[index];
 }
-
-
-
-
