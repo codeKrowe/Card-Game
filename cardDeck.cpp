@@ -27,6 +27,7 @@ cardDeck::cardDeck()
 
   // Allocate 52 spaces for card objects.
   cdeck = new card[52];
+  //deckContainer = new cardDeck[23];
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -63,7 +64,18 @@ cardDeck::cardDeck(cardDeck &orig)
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //   /// Need to change this to custom COPY
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  try {
+    size = orig.size;
+    cdeck = new card[size];
 
+    for (int i=0; i<size; i++)
+      cdeck[i] = orig.cdeck[i];
+  } catch (bad_alloc ex) {
+    // report error to cerr and rethrow exception
+    cerr << "Error when allocation memory in copy constructor "
+	 << "dynArray(orig)\n";
+    throw ex;
+  }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -77,6 +89,7 @@ cardDeck::cardDeck(cardDeck &orig)
 
 cardDeck::~cardDeck()
 {
+	//delete[] deckContainer;
   delete[] cdeck;
   size = 0;
 }
@@ -100,6 +113,7 @@ void cardDeck::initialiseCardDeck(int setNumSets/*,cardDeck deck*/)
 
   /// Should be code here to create setNumsets amount of decks
   // and fill them
+
   int counter = 0;
   for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
   {

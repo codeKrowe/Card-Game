@@ -49,7 +49,7 @@ class cardDeck
   private:
     void f(cardDeck deck);
     // Pointers for array
-    card **cardDeckContainer;
+    cardDeck *deckContainer;
     card *cdeck;
     int size;
 };
