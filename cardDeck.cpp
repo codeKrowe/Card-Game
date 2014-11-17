@@ -26,7 +26,7 @@ cardDeck::cardDeck()
   size = 0;
 
   // Allocate 52 spaces for card objects.
-  cdeck[52];
+  cdeck = new card[52];
 }
 
 //////////////////////////////////////////////////////////////////////
