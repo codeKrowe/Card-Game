@@ -91,7 +91,8 @@ cardDeck::~cardDeck()
 {
 	//delete[] deckContainer;
   delete[] cdeck;
-  size = 0;
+
+  //size = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -279,7 +280,7 @@ card &cardDeck::lookAtCard(int index) const
 //to destination (which now contains additionally all cards previously in source)
 //////////////////////////////////////////////////////////////////////
 
-void cardDeck::moveAllCards(cardDeck *source, cardDeck *destination)
+void cardDeck::moveAllCards(cardDeck &source, cardDeck &destination)
 {
   // pass in 2 decks.
   // check if source deck size > 0
@@ -289,27 +290,29 @@ void cardDeck::moveAllCards(cardDeck *source, cardDeck *destination)
 
   cout << "...In moveAllCards..." << endl;
 
-  int sourceSize = source->getSize();
-  int destSize = destination->getSize();
-  cout << "Size of source deck before move:" << source->getSize() << endl;
-  cout << "Size of dest deck before move: " << destination->getSize() << endl;
+  int sourceSize = source.getSize();
+  int destSize = destination.getSize();
+  cout << "Size of source deck before move:" << source.getSize() << endl;
+  cout << "Size of dest deck before move: " << destination.getSize() << endl;
 
-  if (source->getSize() > 0)
+  if (source.getSize() > 0)
   {
     for (int i = 0; i < sourceSize; ++i)
     {
       // get card in source deck at position i
-      card c = source->lookAtCard(i);
+      card c = source.lookAtCard(i);
 
       // cout << c.getSuitAsString() << " " << c.getRankAsString() << " " << i << endl;
 
       // add i'th card to destination deck
-      destination->addCard(c);
+      destination.addCard(c);
     }
       // all cards moved over, delete source deck
-    cout << "Size of source deck after move: " << source->getSize() << endl;
-    cout << "Size of dest deck after move: " << destination->getSize() << endl;
+    cout << "Size of source deck after move: " << source.getSize() << endl;
+    cout << "Size of dest deck after move: " << destination.getSize() << endl;
     // delete source;
+    source.setSize(0);
+
   }
   else
   {
@@ -356,6 +359,7 @@ void cardDeck::deleteCardDeck()
 
 void cardDeck::fillcards()
 {
+  size = 52;
   int counter = 0;
   for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
   {
@@ -366,6 +370,12 @@ void cardDeck::fillcards()
       cdeck[counter] = cc;
     }
   }
+}
+
+
+void cardDeck::setSize(int s)
+{
+	size = s;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -35,7 +35,7 @@ class cardDeck
     void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);
     void createInitialisedCardDeck(int NumSets);
     // int &moveAllCards(int &destination);
-    static void moveAllCards(cardDeck *source, cardDeck *Destination);
+    static void moveAllCards(cardDeck &source, cardDeck &Destination);
 
     //Test Functions
     void testListContents();
@@ -44,6 +44,7 @@ class cardDeck
     card &accessCard(int index);
     void deleteCard();
     const int getSize(){return size;};
+    void setSize(int s);
 
 
   private:

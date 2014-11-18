@@ -39,27 +39,28 @@ int main()
   /* Test moveAllCards() */
   cout << "...Deck 2 & Deck 3..." << endl;
 
-  cardDeck *d2;
+  cardDeck d2;
+  d2.fillcards();
   // d1.addCard(c1);
-  cardDeck *d3;
+  cardDeck d3;
 
-  int counter = 0;
-  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
-  {
-    for (int rank = card::Ace; rank <= card::King; ++rank)
-    {
-        counter = counter + 1;
-        // must cast the suit and rank integers back to enum type
-        card c2((card::Suit) suit, (card::Rank) rank);
-        d2->addCard(c2);
-    }
-  }
+  // int counter = 0;
+  // for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  // {
+  //   for (int rank = card::Ace; rank <= card::King; ++rank)
+  //   {
+  //       counter = counter + 1;
+  //       // must cast the suit and rank integers back to enum type
+  //       card c2((card::Suit) suit, (card::Rank) rank);
+  //       d2.addCard(c2);
+  //   }
+  // }
 
   cardDeck::moveAllCards(d2, d3);
 
   cout << "Size after move" << endl;
-  cout << "deck 1: " << d2->getSize() << endl;
-  cout << "deck 2: " << d3->getSize() << endl;
+  cout << "deck 1: " << d2.getSize() << endl;
+  cout << "deck 2: " << d3.getSize() << endl;
 
   /* Create a deck dynamically and fill */
 
