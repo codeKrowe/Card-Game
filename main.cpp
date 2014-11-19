@@ -2,6 +2,7 @@
 #include "card.h"
 #include "cardDeck.h"
 #include "cardDeckException.h"
+#include "cardDeckContainer.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int main()
   // card c1(card::Spades, card::Ace);
   // cout << "Card created..." << endl;
 
-  // // Print out cards suit and rank in string format!
+  // // Print out cagirds suit and rank in string format!
   // cout << c1.getRankAsString() << endl;
   // cout << c1.getSuitAsString() << endl;
 
@@ -37,30 +38,122 @@ int main()
 
 
   /* Test moveAllCards() */
-  cout << "...Deck 2 & Deck 3..." << endl;
+  // cout << "...Deck 2 & Deck 3..." << endl;
+  // cardDeck d1;
+  // cardDeck d2;
+  // d2.fillcards();
+  // // d1.addCard(c1);
+  // cardDeck d3;
+  //   cardDeck d4;
+  // cardDeck d5;
+  // cardDeck d6;
+  // cardDeck d7;
 
-  cardDeck d2;
-  d2.fillcards();
-  // d1.addCard(c1);
-  cardDeck d3;
 
-  // int counter = 0;
-  // for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
-  // {
-  //   for (int rank = card::Ace; rank <= card::King; ++rank)
-  //   {
-  //       counter = counter + 1;
-  //       // must cast the suit and rank integers back to enum type
-  //       card c2((card::Suit) suit, (card::Rank) rank);
-  //       d2.addCard(c2);
-  //   }
-  // }
+  // // int counter = 0;
+  // // for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
+  // // {
+  // //   for (int rank = card::Ace; rank <= card::King; ++rank)
+  // //   {
+  // //       counter = counter + 1;
+  // //       // must cast the suit and rank integers back to enum type
+  // //       card c2((card::Suit) suit, (card::Rank) rank);
+  // //       d2.addCard(c2);
+  // //   }
+  // // }
 
-  cardDeck::moveAllCards(d2, d3);
+  // cardDeck::moveAllCards(d2, d3);
 
-  cout << "Size after move" << endl;
-  cout << "deck 1: " << d2.getSize() << endl;
-  cout << "deck 2: " << d3.getSize() << endl;
+  // cout << "Size after move" << endl;
+  // cout << "deck 1: " << d2.getSize() << endl;
+  // cout << "deck 2: " << d3.getSize() << endl;
+  // cout << d2.getID() << endl;
+
+  // cout << d3.getID() << endl;
+  // cout << d7.getID() << endl;
+
+
+
+
+  try {
+    // data d1 = {1,"t1","testdata1"};
+    // data d2 = {2,"t2","testdata2"};
+    // data d3 = {3,"t3","testdata3"};
+    
+    cardDeckContainer list;
+    cardDeck d1(4);
+    cardDeck d2(4);
+    cardDeck d3(4);
+    cardDeck d4(4);
+    cardDeck d5(4);
+    cardDeck d6(4);   
+    // // print empty list
+    // cout << "empty list:\n";
+    // list.printList();
+    // cout << d3.getID() << endl;
+    // // insert one element and print again
+    list.insertNode(d1);
+    // cout << "\n\nlist with one element:\n";
+    // list.printList();
+    
+    // // insert more elements and print again
+    list.insertNode(d2);
+    list.insertNode(d4);
+    list.insertNode(d3);
+    list.insertNode(d5);    
+    list.insertNode(d6);
+    d1.fill();
+    d2.fill();
+    d3.fill();
+    d4.fill();
+    d5.fill();
+    d6.fill();
+    // list.insertNode(d3);
+    // cout << "\n\nlist with multiple elements:\n";
+    // list.printList();
+    list.printList();
+    // // create copy of linked list and print copy
+    // llist copy(list);
+    // cout << "\n\nCopy of list:\n";
+    // copy.printList();
+
+    // // remove second element and print
+    // list.gotoHead();
+    // list.deleteNode(d2);
+    // cout << "\n\nlist with second element removed:\n";
+    // list.printList();
+    list.gotoHead();
+    // // attempt to get data of head
+    list.gotoNextNode();
+    //cout << list.accessData().getID() << endl;
+    list.gotoNextNode();
+    //cout << list.accessData().getID() << endl;
+
+    cout << "delete node - Zero return = good" << endl;
+    cout << list.deleteNode(d1) << endl;
+
+    list.printList();
+
+    list.gotoHead();
+    list.gotoNextNode();
+    //cout << list.accessData().getID() << endl;
+    list.gotoNextNode();
+    //cout << list.accessData().getID() << endl;
+
+    card c = list.accessData().getACard();
+    cout << "Printing a card from a deck from the LLIST -> method chaining" << endl;
+    cout << c.getRankAsString() << endl;;
+
+  } catch (const char *ex) {
+    cout << "\n\nException detected:\n";
+    cout << ex << endl;
+  } catch (...) {
+    cout << "\n\nUnknown exception detected:\n";
+  }
+  return 0;
+
+
+
 
   /* Create a deck dynamically and fill */
 
@@ -196,5 +289,5 @@ int main()
   //  cout << D1.accessCard(i) << endl;
   // }
 
-  return 0;
+ 
 }

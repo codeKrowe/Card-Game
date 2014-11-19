@@ -45,12 +45,23 @@ class cardDeck
     void deleteCard();
     const int getSize(){return size;};
     void setSize(int s);
+    int getID(){return id;};
 
+    inline bool equals(cardDeck &d) {return id == d.id;}
+
+    inline static int assign_id()
+    {
+    static int next_id;
+    return next_id++;
+    }
+    // inline void incrementID(){NEXTID++;};
+    // int getID() const { return ID; }
 
   private:
+    int id;
     void f(cardDeck deck);
     // Pointers for array
-    cardDeck *deckContainer;
+
     card *cdeck;
     int size;
 };

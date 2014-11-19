@@ -11,6 +11,8 @@
 
 using namespace std;
 
+
+
 ///////////////////////////////////////////////////////////////////////
 // cardDeck() - createEmptyCardDeck()
 //    Deafult constructor
@@ -19,6 +21,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck()
 {
+  id = assign_id();
   // No need to create a dynamic array since empty
   // card deck will have 52 memory slots allocated to it.
 
@@ -39,6 +42,9 @@ cardDeck::cardDeck()
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(int newSize)
 {
+  
+  id = assign_id();
+
   size = newSize;
   try {
     //deck = new int[size];
@@ -62,10 +68,11 @@ cardDeck::cardDeck(cardDeck &orig)
 {
 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //   /// Need to change this to custom COPY
+  //   /// 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   try {
     size = orig.size;
+    id = orig.getID();
     cdeck = new card[size];
 
     for (int i=0; i<size; i++)
