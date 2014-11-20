@@ -184,7 +184,7 @@ void cardDeck::deleteCard()
 // deleteCard()
 //////////////////////////////////////////////////////////////////////
 
-card cardDeck::getACard()
+card cardDeck::getTopCard()
 {
   // If less that the current size
   // then it is better to just reduce the
@@ -213,6 +213,8 @@ card cardDeck::getACard()
     }
 
 
+// Returns a specific card, when it finds the card it deletes it while
+// moving the cards above it down one postition
 
 card cardDeck::getSpecificCard(card c)
 {
@@ -234,10 +236,7 @@ card cardDeck::getSpecificCard(card c)
           }
         }
       }
-
-
         return temp;
-    
 
 }
 //////////////////////////////////////////////////////////////////////
@@ -387,25 +386,29 @@ void cardDeck::shuffleDeck()
     }
 }
 
-void cardDeck::deleteCardDeck()
+
+void cardDeck::fill()
 {
-
-
-}
-
-void cardDeck::fillcards()
-{
-  size = 52;
   int counter = 0;
   for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
   {
     for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-      counter = counter + 1;
-      card cc((card::Suit) suit, (card::Rank) rank);
-      cdeck[counter] = cc;
+      if (counter < size)
+      {
+        card cc((card::Suit) suit, (card::Rank) rank);
+        cdeck[counter] = cc;
+      }
+        counter = counter + 1;
     }
   }
+}
+
+
+void cardDeck::deleteCardDeck()
+{
+
+
 }
 
 
@@ -428,19 +431,17 @@ void cardDeck::testListContents()
     }
 }
 
-void cardDeck::fill()
+void cardDeck::fillcards()
 {
+  size = 52;
   int counter = 0;
   for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
   {
     for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-      if (counter < size)
-      {
-        card cc((card::Suit) suit, (card::Rank) rank);
-        cdeck[counter] = cc;
-      }
-        counter = counter + 1;
+      counter = counter + 1;
+      card cc((card::Suit) suit, (card::Rank) rank);
+      cdeck[counter] = cc;
     }
   }
 }

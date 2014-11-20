@@ -153,7 +153,7 @@ int main()
     cout << list.accessData().getID() << endl;
     list.gotoNextNode();
     cout << list.accessData().getID() << endl;
-    card c = list.accessData().getACard();
+    card c = list.accessData().getTopCard();
 
     cout << c.getRankAsString() << endl;;
 
