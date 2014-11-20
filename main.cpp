@@ -11,7 +11,7 @@ int main()
   /* Test Card Class */
 
   // Creates a single card
-  // card c1(card::Spades, card::Ace);
+    card c1(card::Clubs, card::Two);
   // cout << "Card created..." << endl;
 
   // // Print out cagirds suit and rank in string format!
@@ -39,9 +39,22 @@ int main()
 
   /* Test moveAllCards() */
   // cout << "...Deck 2 & Deck 3..." << endl;
-  // cardDeck d1;
-  // cardDeck d2;
-  // d2.fillcards();
+    cardDeck d1(4);
+
+    d1.fill();
+
+    d1.testListContents();
+
+
+    card temp;
+
+    temp = d1.getSpecificCard(c1);
+ 
+    cout << "card return test " << temp.getRankAsString() << " " << temp.getSuitAsString() << endl;
+    cout << "Print out with Re-arrangement" << endl;
+    d1.testListContents();
+
+
   // // d1.addCard(c1);
   // cardDeck d3;
   //   cardDeck d4;
@@ -74,6 +87,7 @@ int main()
 
 
 
+  // cout << "linked list test code" << endl;
 
   try {
     // data d1 = {1,"t1","testdata1"};
@@ -125,23 +139,22 @@ int main()
     list.gotoHead();
     // // attempt to get data of head
     list.gotoNextNode();
-    //cout << list.accessData().getID() << endl;
+    cout << list.accessData().getID() << endl;
     list.gotoNextNode();
-    //cout << list.accessData().getID() << endl;
+    cout << list.accessData().getID() << endl;
 
-    cout << "delete node - Zero return = good" << endl;
+    cout << "delete node" << endl;
     cout << list.deleteNode(d1) << endl;
 
     list.printList();
 
     list.gotoHead();
     list.gotoNextNode();
-    //cout << list.accessData().getID() << endl;
+    cout << list.accessData().getID() << endl;
     list.gotoNextNode();
-    //cout << list.accessData().getID() << endl;
-
+    cout << list.accessData().getID() << endl;
     card c = list.accessData().getACard();
-    cout << "Printing a card from a deck from the LLIST -> method chaining" << endl;
+
     cout << c.getRankAsString() << endl;;
 
   } catch (const char *ex) {

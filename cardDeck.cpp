@@ -8,6 +8,7 @@
 #include "card.h"
 #include "cardDeck.h"
 #include "cardDeckException.h"
+#include <string>
 
 using namespace std;
 
@@ -211,6 +212,34 @@ card cardDeck::getACard()
         return temp;
     }
 
+
+
+card cardDeck::getSpecificCard(card c)
+{
+
+  int position;
+  card temp;
+ 
+
+      for (int i =0; i < size;++i)
+      {
+        if(cdeck[i].getCardRank() == c.getCardRank() 
+          && cdeck[i].getCardSuit() == c.getCardSuit() )
+        {
+          size = size - 1;
+          temp = cdeck[i];
+          for (int j = i; j <size; ++j )
+          {
+            cdeck[j] = cdeck[j+1];
+          }
+        }
+      }
+
+
+        return temp;
+    
+
+}
 //////////////////////////////////////////////////////////////////////
 // addCard()
 //////////////////////////////////////////////////////////////////////
@@ -393,9 +422,9 @@ void cardDeck::setSize(int s)
 
 void cardDeck::testListContents()
 {
-    for (int i=0; i<size+2; ++i)
+    for (int i=0; i<size; ++i)
     {
-
+    cout << cdeck[i].getSuitAsString() << " " << cdeck[i].getRankAsString() << endl;
     }
 }
 

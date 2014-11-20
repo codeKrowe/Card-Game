@@ -3,10 +3,9 @@
 // authors: Jonathan, Cathal, Nidhu
 // date:  01.11.2014
 //////////////////////////////////////////////////////////////////////
+#include "card.h"
 #ifndef CARDDECK_H
 #define CARDDECK_H
-
-#include "card.h"
 
 class cardDeck
 {
@@ -38,9 +37,14 @@ class cardDeck
     static void moveAllCards(cardDeck &source, cardDeck &Destination);
 
     //Test Functions
+
+    card getSpecificCard(card c);
+
     void testListContents();
     void fill();
     void fillcards();
+
+
     card &accessCard(int index);
     void deleteCard();
     const int getSize(){return size;};
@@ -61,7 +65,7 @@ class cardDeck
     int id;
     void f(cardDeck deck);
     // Pointers for array
-
+    // extern cardDeckContainer *Container;
     card *cdeck;
     int size;
 };
