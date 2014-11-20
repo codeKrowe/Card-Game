@@ -157,28 +157,26 @@ void cardDeck::createInitialisedCardDeck(int s)
 
 }
 
-//////////////////////////////////////////////////////////////////////
-// deleteCard()
-//////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////
+// // deleteCard()
+// //////////////////////////////////////////////////////////////////////
 
-void cardDeck::deleteCard()
-{
-  // If less that the current size
-  // then it is better to just reduce the
-  // index total size rather than waste
-  // processing copying
-  //
-  // Simple and effective
-
-  // if (size > 0){size = size-1;}
-  try {
-        size = size - 1;
-        if(size < 0)
-        {throw cardDeckException("Size in the negative -- incorrect");}
-      }
-        catch(cardDeckException ex)
-        {cout << ex.getException() << endl; ++size;}
-}
+// void cardDeck::deleteCard()
+// {
+//   // If less that the current size
+//   // then it is better to just reduce the
+//   // index total size rather than waste
+//   // processing copying
+//   //
+//   // Simple and effective
+//   try {
+//         size = size - 1;
+//         if(size < 0)
+//         {throw cardDeckException("Size in the negative -- incorrect");}
+//       }
+//         catch(cardDeckException ex)
+//         {cout << ex.getException() << endl; ++size;}
+// }
 
 //////////////////////////////////////////////////////////////////////
 // deleteCard()
@@ -192,11 +190,7 @@ card cardDeck::getTopCard()
   // processing copying
   //
   // Simple and effective
-
-  // if (size > 0){size = size-1;}
-
   card temp;
-
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // THIS THROWS TO MAIN --- Needs Matching CATCH
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -222,8 +216,7 @@ card cardDeck::getSpecificCard(card c)
   int position;
   card temp;
  
-
-      for (int i =0; i < size;++i)
+      for (int i =0; i < size; ++i)
       {
         if(cdeck[i].getCardRank() == c.getCardRank() 
           && cdeck[i].getCardSuit() == c.getCardSuit() )
