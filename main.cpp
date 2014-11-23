@@ -62,6 +62,10 @@ int main()
   cout << "Searching for Either a Two OR Clubs" <<endl;
   cout << endl;
 
+  cout << "  container size " << endl;
+  cout << Container.accessPoppedData()->getSize() << endl;
+
+
   cout << "testListContents" << endl;
   obj->testListContents();
   card tempcard = obj->getSpecificCard(c1);
@@ -119,7 +123,7 @@ int main()
   // cout << " player 2 container size" << endl;
   // cout << player2Container.accessPoppedData()->getSize() << endl;
 
-  cout << "  container size initial is 52 -- '' 0 is inclusive '' " << endl;
+  cout << "  container size  " << endl;
   cout << Container.accessPoppedData()->getSize() << endl;
 
   for (int i = 1;i <= 14; ++i)
