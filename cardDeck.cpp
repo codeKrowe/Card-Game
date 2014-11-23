@@ -8,8 +8,11 @@
 #include "card.h"
 #include "cardDeck.h"
 #include "cardDeckException.h"
+#include <string>
 
 using namespace std;
+
+
 
 ///////////////////////////////////////////////////////////////////////
 // cardDeck() - createEmptyCardDeck()
@@ -19,6 +22,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck()
 {
+  id = assign_id();
   // No need to create a dynamic array since empty
   // card deck will have 52 memory slots allocated to it.
 
@@ -39,6 +43,9 @@ cardDeck::cardDeck()
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(int newSize)
 {
+  
+  id = assign_id();
+
   size = newSize;
   try {
     //deck = new int[size];
@@ -62,10 +69,11 @@ cardDeck::cardDeck(cardDeck &orig)
 {
 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //   /// Need to change this to custom COPY
+  //   /// 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   try {
     size = orig.size;
+    id = orig.getID();
     cdeck = new card[size];
 
     for (int i=0; i<size; i++)
@@ -149,11 +157,32 @@ void cardDeck::createInitialisedCardDeck(int s)
 
 }
 
+// //////////////////////////////////////////////////////////////////////
+// // deleteCard()
+// //////////////////////////////////////////////////////////////////////
+
+// void cardDeck::deleteCard()
+// {
+//   // If less that the current size
+//   // then it is better to just reduce the
+//   // index total size rather than waste
+//   // processing copying
+//   //
+//   // Simple and effective
+//   try {
+//         size = size - 1;
+//         if(size < 0)
+//         {throw cardDeckException("Size in the negative -- incorrect");}
+//       }
+//         catch(cardDeckException ex)
+//         {cout << ex.getException() << endl; ++size;}
+// }
+
 //////////////////////////////////////////////////////////////////////
 // deleteCard()
 //////////////////////////////////////////////////////////////////////
 
-void cardDeck::deleteCard()
+card cardDeck::getTopCard()
 {
   // If less that the current size
   // then it is better to just reduce the
@@ -161,34 +190,7 @@ void cardDeck::deleteCard()
   // processing copying
   //
   // Simple and effective
-
-  // if (size > 0){size = size-1;}
-  try {
-        size = size - 1;
-        if(size < 0)
-        {throw cardDeckException("Size in the negative -- incorrect");}
-      }
-        catch(cardDeckException ex)
-        {cout << ex.getException() << endl; ++size;}
-}
-
-//////////////////////////////////////////////////////////////////////
-// deleteCard()
-//////////////////////////////////////////////////////////////////////
-
-card cardDeck::getACard()
-{
-  // If less that the current size
-  // then it is better to just reduce the
-  // index total size rather than waste
-  // processing copying
-  //
-  // Simple and effective
-
-  // if (size > 0){size = size-1;}
-
   card temp;
-
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // THIS THROWS TO MAIN --- Needs Matching CATCH
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -204,6 +206,32 @@ card cardDeck::getACard()
         return temp;
     }
 
+
+// Returns a specific card, when it finds the card it deletes it while
+// moving the cards above it down one postition
+
+card cardDeck::getSpecificCard(card c)
+{
+
+  int position;
+  card temp;
+ 
+      for (int i =0; i < size; ++i)
+      {
+        if(cdeck[i].getCardRank() == c.getCardRank() 
+          && cdeck[i].getCardSuit() == c.getCardSuit() )
+        {
+          size = size - 1;
+          temp = cdeck[i];
+          for (int j = i; j <size; ++j )
+          {
+            cdeck[j] = cdeck[j+1];
+          }
+        }
+      }
+        return temp;
+
+}
 //////////////////////////////////////////////////////////////////////
 // addCard()
 //////////////////////////////////////////////////////////////////////
@@ -351,25 +379,29 @@ void cardDeck::shuffleDeck()
     }
 }
 
-void cardDeck::deleteCardDeck()
+
+void cardDeck::fill()
 {
-
-
-}
-
-void cardDeck::fillcards()
-{
-  size = 52;
   int counter = 0;
   for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
   {
     for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-      counter = counter + 1;
-      card cc((card::Suit) suit, (card::Rank) rank);
-      cdeck[counter] = cc;
+      if (counter < size)
+      {
+        card cc((card::Suit) suit, (card::Rank) rank);
+        cdeck[counter] = cc;
+      }
+        counter = counter + 1;
     }
   }
+}
+
+
+void cardDeck::deleteCardDeck()
+{
+
+
 }
 
 
@@ -386,25 +418,23 @@ void cardDeck::setSize(int s)
 
 void cardDeck::testListContents()
 {
-    for (int i=0; i<size+2; ++i)
+    for (int i=0; i<size; ++i)
     {
-
+    cout << cdeck[i].getSuitAsString() << " " << cdeck[i].getRankAsString() << endl;
     }
 }
 
-void cardDeck::fill()
+void cardDeck::fillcards()
 {
+  size = 52;
   int counter = 0;
   for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
   {
     for (int rank = card::Ace; rank <= card::King; ++rank)
     {
-      if (counter < size)
-      {
-        card cc((card::Suit) suit, (card::Rank) rank);
-        cdeck[counter] = cc;
-      }
-        counter = counter + 1;
+      counter = counter + 1;
+      card cc((card::Suit) suit, (card::Rank) rank);
+      cdeck[counter] = cc;
     }
   }
 }

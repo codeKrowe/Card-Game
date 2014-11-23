@@ -3,10 +3,9 @@
 // authors: Jonathan, Cathal, Nidhu
 // date:  01.11.2014
 //////////////////////////////////////////////////////////////////////
+#include "card.h"
 #ifndef CARDDECK_H
 #define CARDDECK_H
-
-#include "card.h"
 
 class cardDeck
 {
@@ -23,34 +22,57 @@ class cardDeck
     // copy constructor
     cardDeck(cardDeck &orig);
 
-    //Accessor
-    card &lookAtCard(int index) const;
+
+//////////////// Member Functions //////////////////////
+    
+    //same as getSize -- one should be redundant
     int getNumberOfCards() const;
     //Mutator
-    card getACard();
+    // access the topcard while "deleting" it.
+    card getTopCard();
+    // gets a specific card and reorders the deck when removed
+    card getSpecificCard(card c);
+    // Returns a card but does not delete it
     card lookAtCard() const;
+    card &lookAtCard(int index) const;    
     void deleteCardDeck();
+    // Pop a card on to the top of the Deck
     void addCard(card c);
+    // Shuffle a Decks cards 
     void shuffleDeck();
     void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);
     void createInitialisedCardDeck(int NumSets);
-    // int &moveAllCards(int &destination);
+    int &moveAllCards(int &destination);
     static void moveAllCards(cardDeck &source, cardDeck &Destination);
 
-    //Test Functions
-    void testListContents();
+    // Fills a card deck with "Size" number of cards
     void fill();
-    void fillcards();
     card &accessCard(int index);
-    void deleteCard();
+    //void deleteCard();
+    // return the number of cards in the Deck
     const int getSize(){return size;};
-    void setSize(int s);
+    // set the number of cards that will be in the Deck
+    void setSize(int s); 
+    //Return an  identifier for use in the linked list implementation
+    int getID(){return id;};
+    inline bool equals(cardDeck &d) {return id == d.id;}
 
+
+//////Test Functions//////////////////////////////////
+    void testListContents();
+    void fillcards();
+
+    inline static int assign_id()
+    {
+    static int next_id;
+    return next_id++;
+    }
 
   private:
+    int id;
     void f(cardDeck deck);
     // Pointers for array
-    cardDeck *deckContainer;
+    // extern cardDeckContainer *Container;
     card *cdeck;
     int size;
 };
