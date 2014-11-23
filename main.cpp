@@ -3,11 +3,14 @@
 #include "cardDeck.h"
 #include "cardDeckException.h"
 #include "cardDeckContainer.h"
+#include "player.h"
 
 using namespace std;
 
 int main()
 {
+
+  player P1(1);
   /* Test Card Class */
 
   // Creates a single card

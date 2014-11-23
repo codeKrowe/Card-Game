@@ -1,31 +1,27 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <cardeck.h>
+//#include "cardDeck.h"
 
-class Player
+class player
 {
 	public:
 	//Player constuctor
-	Player();
+	player();
+	player(int ID);
 	//Displays the number of cards the player has
 	inline int statusPlayer() {return no_of_cards;}
 	//search for the "top card" in the player's deck
-	inline int searchCards() {return card;}
-	}
-private:
+	//inline int searchCards() {return card;}
+	inline int getPlayerID(){return id;}
 
-int nrofcards;//no_of_cards
+	void setNoCards(int NOC);
+	
+	private:
+	int id;
+	int no_of_cards ;//no_of_cards
 
 };
-
-
-
-
-
-
-
-
 
 
 #endif
