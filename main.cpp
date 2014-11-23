@@ -24,7 +24,7 @@ int main()
   for (int i = 0; i < no_of_decks; ++i)
   {
     //create sets of card decks (52 C's) for main deck, with INT ID's
-    cardDeck cd(5,i);
+    cardDeck cd(52,i);
     cd.fill();
     cd.shuffleDeck();
     // push places to top of the Linked List
@@ -71,6 +71,87 @@ int main()
 
   cout << "testListContents after found an removed card" << endl;
   obj->testListContents();
+
+  cout << "Number of Decks in Main Deck Container :" << Container.getNoCardsDecks() << endl;
+
+  
+  // set up a container for each player one with empty deck
+  // using a container because depending on game size, and pick ups
+  // gives room for further decks 
+  // a limitiation in our implemenation 
+  // should have used a linked list from the star/
+  ////////////////////////////////////////////
+  /// players containers//////////////////
+  // for the played cards decks////////
+  cardDeckContainer player1Container;
+  cardDeck Player1Deck;
+  Player1Deck.setID(1);
+  player1Container.push(Player1Deck);
+
+
+  cardDeckContainer player2Container;
+  cardDeck Player2Deck;
+  Player2Deck.setID(1);
+  player2Container.push(Player2Deck);
+
+  ///////////////////////////////////////
+  /// Holder container//////////////////
+  // for the played cards decks////////
+  cardDeckContainer cardHolderContainer;
+  cardDeck holderDeck;
+  holderDeck.setID(1);
+  cardHolderContainer.push(holderDeck);
+
+
+  //cout << "Number of Decks in PLayer Deck Container :" << playerDecks.getNoCardsDecks() << endl;
+
+
+  // this loop demos  placing seven cards into the player
+  // decks one at a time
+  // first get the number of decks in the container
+  // so that the top one can be accessed
+  int numberDecksMainContainer = Container.getNoCardsDecks();
+  Container.returnSpecificDeck(numberDecksMainContainer);
+  player2Container.returnSpecificDeck(1);
+  player1Container.returnSpecificDeck(1);
+
+
+  // cout << " player 2 container size" << endl;
+  // cout << player2Container.accessPoppedData()->getSize() << endl;
+
+  cout << "  container size initial is 52 -- '' 0 is inclusive '' " << endl;
+  cout << Container.accessPoppedData()->getSize() << endl;
+
+  for (int i = 1;i <= 14; ++i)
+  {
+    if(i%2 == 0)
+    {
+      // returns top deck from main container - will cause issue if  that was popped
+      // grand here though
+     //cardDeck temp  = Container.returnSpecificDeck(numberDecksMainContainer);
+
+     player2Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+    }
+    else
+    {
+
+     player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());  
+    }
+  }
+
+  cout << "  container size after" << endl;
+  cout << Container.accessPoppedData()->getSize() << endl;
+
+
+
+  //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@///
+  //
+  //
+  // Gonna have issues dealing with the multiple dercsk
+  //
+  //
+  //
+
 
 
 

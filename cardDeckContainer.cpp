@@ -1,8 +1,8 @@
-// llist.cpp: implementation of the llist class.
+// cardDeckContainer.cpp: implementation of the llist class.
 //
 // simple implementation of single linked list
 // 
-// author:	reiner dojen
+// authors: Jonathan, Cathal, Nidhu
 // date:	17.10.2003
 //////////////////////////////////////////////////////////////////////
 
@@ -43,6 +43,7 @@ cardDeckContainer::cardDeckContainer()
     head->setSuccessor(tail);
     tail->setSuccessor(NULL);
     current = head;
+    NoCardDecks = 0;
   } catch (bad_alloc ex) {
     // check if any node has been allocated and clean up
     if (head != NULL) {
@@ -74,7 +75,7 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
     cardDeck dummy;
     // safe old current node
     llnode *oldcurrent = orig.current;
-    
+    NoCardDecks = orig.getNoCardsDecks();
     // allocate nodes for new list
     head = new llnode(dummy);
     tail = new llnode(dummy);
@@ -145,6 +146,7 @@ cardDeckContainer::~cardDeckContainer()
 //////////////////////////////////////////////////////////////////////
 cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
 {
+
   llnode *newnode;
   llError returnvalue=ok;
   try {
@@ -156,6 +158,7 @@ cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
       newnode = new llnode(newdata,current->getSuccessor());
       newnode->setSuccessor(current->getSuccessor());
       current->setSuccessor(newnode);
+      NoCardDecks = NoCardDecks + 1;
     }
   } catch (bad_alloc ex) {
     // deal with allocation failure
@@ -219,6 +222,7 @@ cardDeckContainer::llError cardDeckContainer::deleteNode(cardDeck &d)
     delnodePredecessor->setSuccessor(delnode->getSuccessor());
     // remove node
     delete delnode;
+    NoCardDecks = NoCardDecks - 1;
     // adjust current to predecessor
     current = delnodePredecessor;
   } // node not found, no action required
@@ -316,6 +320,7 @@ bool cardDeckContainer::push(cardDeck &data)
       newnode = new llnode(data,current->getSuccessor());
       newnode->setSuccessor(current->getSuccessor());
       current->setSuccessor(newnode);
+      NoCardDecks = NoCardDecks + 1;
     }
   } catch (bad_alloc ex) {
     // deal with allocation failure
@@ -366,6 +371,7 @@ bool cardDeckContainer::pop()
     // adjust current to predecessor [HEAD]
     current = delnodePredecessor;
     status = true;
+    NoCardDecks = NoCardDecks - 1;
     }
     else{cout << "Empty STACK -- Nothing to POP" << endl;}
   }catch (bad_alloc ex){cout << "Memory Error" << endl;}

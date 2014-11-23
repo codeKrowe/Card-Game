@@ -33,6 +33,8 @@ class cardDeckContainer
   cardDeck * accessPoppedData();
   // Used by member methods
 
+  inline int getNoCardsDecks(){return NoCardDecks;};
+
   cardDeck & accessData();
   inline void gotoHead() {current = head;}
   llError gotoNextNode();
@@ -47,6 +49,7 @@ class cardDeckContainer
   virtual ~cardDeckContainer();
   
  private:
+  int NoCardDecks;
   cardDeck *obby;
   llnode *head;
   llnode *tail;

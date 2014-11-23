@@ -22,6 +22,7 @@ class cardDeck
     // copy constructor
     cardDeck(cardDeck &orig);
 
+   //typedef enum  {player1 = 9999, player2 =10000} playingDecks;
 
 //////////////// Member Functions //////////////////////
     
@@ -55,6 +56,7 @@ class cardDeck
     void setSize(int s); 
     //Return an  identifier for use in the linked list implementation
     int getID(){return id;};
+    inline void setID(int ID){id = ID;}
     inline bool equals(cardDeck &d) {return id == d.id;}
 
 
