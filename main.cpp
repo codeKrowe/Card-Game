@@ -11,10 +11,69 @@ int main()
 {
 
   player P1(1);
-  /* Test Card Class */
+  player P2(2);
+
+
+  cardDeckContainer Container;
+
+  int no_of_decks;
+  cout << "Please Enter a Number of Decks to play with" << endl;
+  cin >> no_of_decks;
+
+
+  for (int i = 0; i < no_of_decks; ++i)
+  {
+    //create sets of card decks (52 C's) for main deck, with INT ID's
+    cardDeck cd(5,i);
+    cd.fill();
+    cd.shuffleDeck();
+    // push places to top of the Linked List
+    // Under Head/
+    // if you use insertNode you will have to got to a postion (head)
+    // with gotoHead() beforehand
+    Container.push(cd);
+  }
+
+
+  // You access the elements manually by traversing the 
+  // LIST with gotonextnode() gottohead() getSuccessor and so on
+
+  // but i haver also added the below way of just searching
+  // by ID returnSpecificDeck()
+  // needs to be accessed with accessPoppedData() afterwards
+
+  Container.printList();
+
+  cout << endl;
+  //need to add error handling for an non-existant ID
+  // returnSpecificDeck places the CARDDECK object in temp storage
+  Container.returnSpecificDeck(2);
+  //acccessed with accessPoppedData()
+  cardDeck *obj = Container.accessPoppedData();
+  cout << "Returened specific Deck bY id " << obj->getID() << endl;
+  cout << "accessed deck -- size" << obj->getSize() << endl;
+  //obj->testListContents();
+  cout << endl;
 
   // Creates a single card
-    card c1(card::Clubs, card::Two);
+  card c1(card::Clubs, card::Two);
+
+  cout << "Example of searching for a card of speific rank or suit" << endl;
+  cout << "Searching for Either a Two OR Clubs" <<endl;
+  cout << endl;
+
+  cout << "testListContents" << endl;
+  obj->testListContents();
+  card tempcard = obj->getSpecificCard(c1);
+
+  cout << "Returned card = "  << tempcard.getRankAsString() << " " << tempcard.getSuitAsString() << endl;
+  cout << endl;
+
+  cout << "testListContents after found an removed card" << endl;
+  obj->testListContents();
+
+
+
   // cout << "Card created..." << endl;
 
   // // Print out cagirds suit and rank in string format!
@@ -42,20 +101,20 @@ int main()
 
   /* Test moveAllCards() */
   // cout << "...Deck 2 & Deck 3..." << endl;
-    cardDeck d1(4);
+    // cardDeck d1(4);
 
-    d1.fill();
+    // d1.fill();
 
-    d1.testListContents();
+    // d1.testListContents();
 
 
-    card temp;
+    // card temp;
 
-    temp = d1.getSpecificCard(c1);
+    // temp = d1.getSpecificCard(c1);
  
-    cout << "card return test " << temp.getRankAsString() << " " << temp.getSuitAsString() << endl;
-    cout << "Print out with Re-arrangement" << endl;
-    d1.testListContents();
+    // cout << "card return test " << temp.getRankAsString() << " " << temp.getSuitAsString() << endl;
+    // cout << "Print out with Re-arrangement" << endl;
+    // d1.testListContents();
 
 
   // // d1.addCard(c1);
@@ -97,68 +156,68 @@ int main()
     // data d2 = {2,"t2","testdata2"};
     // data d3 = {3,"t3","testdata3"};
     
-    cardDeckContainer list;
-    cardDeck d1(4);
-    cardDeck d2(4);
-    cardDeck d3(4);
-    cardDeck d4(4);
-    cardDeck d5(4);
-    cardDeck d6(4);   
-    // // print empty list
-    // cout << "empty list:\n";
-    // list.printList();
-    // cout << d3.getID() << endl;
-    // // insert one element and print again
-    list.insertNode(d1);
-    // cout << "\n\nlist with one element:\n";
-    // list.printList();
+    // cardDeckContainer list;
+    // cardDeck d1(4);
+    // cardDeck d2(4);
+    // cardDeck d3(4);
+    // cardDeck d4(4);
+    // cardDeck d5(4);
+    // cardDeck d6(4);   
+    // // // print empty list
+    // // cout << "empty list:\n";
+    // // list.printList();
+    // // cout << d3.getID() << endl;
+    // // // insert one element and print again
+    // list.insertNode(d1);
+    // // cout << "\n\nlist with one element:\n";
+    // // list.printList();
     
-    // // insert more elements and print again
-    list.insertNode(d2);
-    list.insertNode(d4);
-    list.insertNode(d3);
-    list.insertNode(d5);    
-    list.insertNode(d6);
-    d1.fill();
-    d2.fill();
-    d3.fill();
-    d4.fill();
-    d5.fill();
-    d6.fill();
+    // // // insert more elements and print again
+    // list.insertNode(d2);
+    // list.insertNode(d4);
     // list.insertNode(d3);
-    // cout << "\n\nlist with multiple elements:\n";
+    // list.insertNode(d5);    
+    // list.insertNode(d6);
+    // d1.fill();
+    // d2.fill();
+    // d3.fill();
+    // d4.fill();
+    // d5.fill();
+    // d6.fill();
+    // // list.insertNode(d3);
+    // // cout << "\n\nlist with multiple elements:\n";
+    // // list.printList();
     // list.printList();
-    list.printList();
-    // // create copy of linked list and print copy
-    // llist copy(list);
-    // cout << "\n\nCopy of list:\n";
-    // copy.printList();
+    // // // create copy of linked list and print copy
+    // // llist copy(list);
+    // // cout << "\n\nCopy of list:\n";
+    // // copy.printList();
 
-    // // remove second element and print
+    // // // remove second element and print
+    // // list.gotoHead();
+    // // list.deleteNode(d2);
+    // // cout << "\n\nlist with second element removed:\n";
+    // // list.printList();
     // list.gotoHead();
-    // list.deleteNode(d2);
-    // cout << "\n\nlist with second element removed:\n";
+    // // // attempt to get data of head
+    // list.gotoNextNode();
+    // cout << list.accessData().getID() << endl;
+    // list.gotoNextNode();
+    // cout << list.accessData().getID() << endl;
+
+    // cout << "delete node" << endl;
+    // cout << list.deleteNode(d1) << endl;
+
     // list.printList();
-    list.gotoHead();
-    // // attempt to get data of head
-    list.gotoNextNode();
-    cout << list.accessData().getID() << endl;
-    list.gotoNextNode();
-    cout << list.accessData().getID() << endl;
 
-    cout << "delete node" << endl;
-    cout << list.deleteNode(d1) << endl;
+    // list.gotoHead();
+    // list.gotoNextNode();
+    // cout << list.accessData().getID() << endl;
+    // list.gotoNextNode();
+    // cout << list.accessData().getID() << endl;
+    // card c = list.accessData().getTopCard();
 
-    list.printList();
-
-    list.gotoHead();
-    list.gotoNextNode();
-    cout << list.accessData().getID() << endl;
-    list.gotoNextNode();
-    cout << list.accessData().getID() << endl;
-    card c = list.accessData().getTopCard();
-
-    cout << c.getRankAsString() << endl;;
+    // cout << c.getRankAsString() << endl;;
 
   } catch (const char *ex) {
     cout << "\n\nException detected:\n";

@@ -22,7 +22,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck()
 {
-  id = assign_id();
+  id = assign_id() + 100;
   // No need to create a dynamic array since empty
   // card deck will have 52 memory slots allocated to it.
 
@@ -41,10 +41,10 @@ cardDeck::cardDeck()
 //
 // parameter: newsize - size of dynamic array
 //////////////////////////////////////////////////////////////////////
-cardDeck::cardDeck(int newSize)
+cardDeck::cardDeck(int newSize, int ID)
 {
   
-  id = assign_id();
+  id = ID;
 
   size = newSize;
   try {
@@ -212,14 +212,13 @@ card cardDeck::getTopCard()
 
 card cardDeck::getSpecificCard(card c)
 {
-
   int position;
   card temp;
  
       for (int i =0; i < size; ++i)
       {
         if(cdeck[i].getCardRank() == c.getCardRank() 
-          && cdeck[i].getCardSuit() == c.getCardSuit() )
+          || cdeck[i].getCardSuit() == c.getCardSuit() )
         {
           size = size - 1;
           temp = cdeck[i];
@@ -227,6 +226,9 @@ card cardDeck::getSpecificCard(card c)
           {
             cdeck[j] = cdeck[j+1];
           }
+          //needs a break otherwise may delete 2 indexs as the suit and
+          //rank may exist in the deck.
+          break;
         }
       }
         return temp;
@@ -370,7 +372,7 @@ void cardDeck::moveAllCards(cardDeck &source, cardDeck &destination)
 void cardDeck::shuffleDeck()
 {
     srand (time(0));
-    for (int i = 52-1; i > 0; i--)
+    for (int i = size-1; i > 0; i--)
     {
       int r = rand() % (i+1);
       card temp = cdeck[i];

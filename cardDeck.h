@@ -17,7 +17,7 @@ class cardDeck
     ~cardDeck();
 
     //Generic
-    cardDeck(int size);
+    cardDeck(int size, int ID);
 
     // copy constructor
     cardDeck(cardDeck &orig);

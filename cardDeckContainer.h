@@ -23,19 +23,31 @@ class llnode {
 class cardDeckContainer  
 {
  public:
+  bool push(cardDeck &data);
+  bool pop();
+
   // define error-conditions
   typedef enum {ok,noMemory,illegalNode} llError;
+
+  // access data last popped from the stack
+  cardDeck * accessPoppedData();
+  // Used by member methods
+
   cardDeck & accessData();
   inline void gotoHead() {current = head;}
   llError gotoNextNode();
   llError deleteNode(cardDeck &d);
   llError insertNode(cardDeck &newdata);
+
+  llError returnSpecificDeck(int id);
+
   void printList();
   cardDeckContainer(cardDeckContainer &orig);
   cardDeckContainer();
   virtual ~cardDeckContainer();
   
  private:
+  cardDeck *obby;
   llnode *head;
   llnode *tail;
   llnode *current;

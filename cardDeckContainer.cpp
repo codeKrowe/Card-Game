@@ -69,6 +69,8 @@ cardDeckContainer::cardDeckContainer()
 cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
 {
   try {
+
+    obby = orig.accessPoppedData();
     cardDeck dummy;
     // safe old current node
     llnode *oldcurrent = orig.current;
@@ -223,6 +225,44 @@ cardDeckContainer::llError cardDeckContainer::deleteNode(cardDeck &d)
   return returnvalue;
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// returnSpecificDeck(data)
+// removes the successor of current from the list (current will be
+// modified)
+//
+// parameter: none
+// return: ok - removal successful
+//         illegalNode - cannot find node to be removed.
+//////////////////////////////////////////////////////////////////////
+cardDeckContainer::llError cardDeckContainer::returnSpecificDeck(int ID)
+{
+  llError returnvalue=illegalNode;
+  bool foundNode=false;
+  current = head;
+  while (current->getSuccessor() != tail) {
+    current = current->getSuccessor();
+    if (current->getData().getID() == ID) {
+      foundNode = true;
+      obby = &current->getData();
+      break;
+    }
+  } 
+
+  // test if node carrying data has been found
+  if (foundNode) {
+    // yes, node found
+    returnvalue = ok;
+    current = head;
+  } // node not found, no action required
+  //cout << "reached here" << endl;
+  return returnvalue;
+
+}
+
+
+
+
 //////////////////////////////////////////////////////////////////////
 // accessData()
 // accesses the data of the current node, allows both reading and
@@ -258,6 +298,100 @@ void cardDeckContainer::printList()
   }
 	cout << "Tail" << endl;
 }
+
+bool cardDeckContainer::push(cardDeck &data) 
+{
+  //return status
+  bool returnvalue=true;
+  try {
+    // Pointer for new node
+    llnode *newnode;
+    // make sure starts at Head, current = head
+    gotoHead();
+    // double check
+    if (current == tail) {
+      returnvalue = false;
+    } else {
+      // insert node to top of the stack undearneath the Head 
+      newnode = new llnode(data,current->getSuccessor());
+      newnode->setSuccessor(current->getSuccessor());
+      current->setSuccessor(newnode);
+    }
+  } catch (bad_alloc ex) {
+    // deal with allocation failure
+    returnvalue = noMemory;
+  }    
+  return returnvalue;   
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// pop()
+// removes the successor of HEAD from the stack 
+//
+// stores the nodes object for access 
+// through another method accessPoppedData()
+//
+// parameter: none
+// return: ok - removal successful
+//         status - cannot find or can find node to be removed.
+//////////////////////////////////////////////////////////////////////
+
+bool cardDeckContainer::pop() 
+{
+
+  bool status = false;
+  // Pointers for node for deletion and its predecessor
+  llnode *delnode=NULL, *delnodePredecessor=NULL;
+  //again start at head as this is a stack
+  current = head;
+  try{
+    // double check
+  if (current->getSuccessor() != tail) {
+    //
+    // stores the predessor as the Head
+    delnodePredecessor = current;
+    //set the current as the next node, successor of Head
+    current = current->getSuccessor();
+    //store the object - this is the object that is popped
+    // store it in a member attribute for access from another method
+    obby = &current->getData();
+    // set the current node for deletion - ready for pop
+    //Delete node under Head
+    delnode = current;
+    //connect the the deleted nodes Predecessor [Head] to its successor
+    delnodePredecessor->setSuccessor(delnode->getSuccessor());
+    // remove the popped node
+    delete delnode;
+    // adjust current to predecessor [HEAD]
+    current = delnodePredecessor;
+    status = true;
+    }
+    else{cout << "Empty STACK -- Nothing to POP" << endl;}
+  }catch (bad_alloc ex){cout << "Memory Error" << endl;}
+ return status;
+}
+
+//////////////////////////////////////////////////////////////////////
+// accessPoppedData()
+// accesses the data of the popped node
+//
+// parameter: none
+// return: reference to data popped from node
+//////////////////////////////////////////////////////////////////////
+
+cardDeck *cardDeckContainer::accessPoppedData()
+{
+  //cout << "reached here access" << endl;
+  //if (current == head) throw "Accessing data of head node";
+  if (obby->getID() == 0)
+  {
+  throw "There is no popped object available";
+  }
+  return obby;
+  //return current->getData();
+}
+
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
