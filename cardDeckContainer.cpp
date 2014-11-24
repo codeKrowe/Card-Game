@@ -378,6 +378,42 @@ bool cardDeckContainer::pop()
  return status;
 }
 
+
+bool cardDeckContainer::del_empty() 
+{
+
+  bool status = false;
+  // Pointers for node for deletion and its predecessor
+  llnode *delnode=NULL, *delnodePredecessor=NULL;
+  //again start at head as this is a stack
+  current = head;
+  try{
+    // double check
+  if (current->getSuccessor() != tail) {
+    //
+    // stores the predessor as the Head
+    delnodePredecessor = current;
+    //set the current as the next node, successor of Head
+    current = current->getSuccessor();
+    //store the object - this is the object that is popped
+    // store it in a member attribute for access from another method
+    // obby = &current->getData();
+    // set the current node for deletion - ready for pop
+    //Delete node under Head
+    delnode = current;
+    //connect the the deleted nodes Predecessor [Head] to its successor
+    delnodePredecessor->setSuccessor(delnode->getSuccessor());
+    // remove the popped node
+    delete delnode;
+    // adjust current to predecessor [HEAD]
+    current = delnodePredecessor;
+    status = true;
+    NoCardDecks = NoCardDecks - 1;
+    }
+    else{cout << "Empty STACK -- Nothing to POP" << endl;}
+  }catch (bad_alloc ex){cout << "Memory Error" << endl;}
+ return status;
+}
 //////////////////////////////////////////////////////////////////////
 // accessPoppedData()
 // accesses the data of the popped node

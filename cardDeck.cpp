@@ -238,7 +238,7 @@ card cardDeck::getSpecificCard(card c)
 // addCard()
 //////////////////////////////////////////////////////////////////////
 
-void cardDeck::addCard(card passedCard)
+bool cardDeck::addCard(card passedCard)
 {
   /*
   need to make sure that cards cant be added
@@ -252,6 +252,7 @@ void cardDeck::addCard(card passedCard)
 
   Correct Error handling too
   */
+  bool status = false;
   int i;
   card *newDeck;
 
@@ -271,12 +272,13 @@ void cardDeck::addCard(card passedCard)
         // use newdata as data
         cdeck = newDeck;
         size = newsize;
+        status = true;
       }
   catch(cardDeckException ex)
   {cout << ex.getException() << endl;size = size - 1;}
   catch (bad_alloc memex)
   {cerr << "Memory allocation Issue"  << endl;throw memex;}
-
+  return status;
 }
 
 //////////////////////////////////////////////////////////////////////

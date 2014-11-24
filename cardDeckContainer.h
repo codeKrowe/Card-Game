@@ -25,6 +25,7 @@ class cardDeckContainer
  public:
   bool push(cardDeck &data);
   bool pop();
+  bool del_empty();
 
   // define error-conditions
   typedef enum {ok,noMemory,illegalNode} llError;

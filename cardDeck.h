@@ -38,7 +38,7 @@ class cardDeck
     card &lookAtCard(int index) const;    
     void deleteCardDeck();
     // Pop a card on to the top of the Deck
-    void addCard(card c);
+    bool addCard(card c);
     // Shuffle a Decks cards 
     void shuffleDeck();
     void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);

@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-
+  try{
   player P1(1);
   player P2(2);
 
@@ -23,8 +23,9 @@ int main()
 
   for (int i = 0; i < no_of_decks; ++i)
   {
+    cout << "\nCdECK ID = \n" << (i+1) << endl;
     //create sets of card decks (52 C's) for main deck, with INT ID's
-    cardDeck cd(52,i);
+    cardDeck cd(52,(i+1));
     cd.fill();
     cd.shuffleDeck();
     // push places to top of the Linked List
@@ -34,6 +35,11 @@ int main()
     Container.push(cd);
   }
 
+
+  ////////////////////////////////////////////////////////#
+  //   AccessPoppedData() does not remove data
+  //   just a name remnant from another program
+  ///////////////////////////////////////////////////////////
 
   // You access the elements manually by traversing the 
   // LIST with gotonextnode() gottohead() getSuccessor and so on
@@ -47,7 +53,7 @@ int main()
   cout << endl;
   //need to add error handling for an non-existant ID
   // returnSpecificDeck places the CARDDECK object in temp storage
-  Container.returnSpecificDeck(2);
+  Container.returnSpecificDeck(3);
   //acccessed with accessPoppedData()
   cardDeck *obj = Container.accessPoppedData();
   cout << "Returened specific Deck bY id " << obj->getID() << endl;
@@ -101,10 +107,10 @@ int main()
   ///////////////////////////////////////
   /// Holder container//////////////////
   // for the played cards decks////////
-  cardDeckContainer cardHolderContainer;
+  cardDeckContainer holderContainer;
   cardDeck holderDeck;
   holderDeck.setID(1);
-  cardHolderContainer.push(holderDeck);
+  holderContainer.push(holderDeck);
 
 
   //cout << "Number of Decks in PLayer Deck Container :" << playerDecks.getNoCardsDecks() << endl;
@@ -128,7 +134,7 @@ int main()
 
   for (int i = 1;i <= 14; ++i)
   {
-    if(i%2 == 0)
+    if((i+2)%2 == 0)
     {
       // returns top deck from main container - will cause issue if  that was popped
       // grand here though
@@ -148,6 +154,54 @@ int main()
 
 
 
+  /// this is trickey, when decks become empty and when decks become full
+  // such as the holderDeck for the played cards
+  // JUst writing init method - 
+  holderContainer.returnSpecificDeck(1);
+  int currentHolderDeck = 1;
+  int currentDeck = Container.getNoCardsDecks();
+  //Container.returnSpecificDeck(currentDeck);
+  cout << "Number of decks " << currentDeck << endl;
+   while (Container.getNoCardsDecks() > 0)
+  {
+  
+
+    //cout << "No Decks" <<Container.getNoCardsDecks()  << endl;
+   // cout << "Container Elem size" <<Container.accessPoppedData()->getSize()  << endl;
+
+
+   if(Container.accessPoppedData()->getSize() > 0 
+    && holderContainer.accessPoppedData()->getSize() < 52)
+   {
+    cout << "here Holder Size " << holderContainer.accessPoppedData()->getSize() << endl;
+    holderContainer.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+   }
+   else
+   {
+
+      if(Container.accessPoppedData()->getSize() == 0)
+      {
+        cout << "****************Deck Deleted******************** " << endl;
+        Container.del_empty();
+        currentDeck = currentDeck -1;
+      }
+      cout << "$$$$$$$$Current Container Deck$$$$$$$$$$$$$$$$$ " << currentDeck << endl;
+      
+      Container.returnSpecificDeck(currentDeck);
+
+      if (holderContainer.accessPoppedData()->getSize() > 51)
+      {
+          cout << "Here at second " << endl; 
+          cardDeck TempholderDeck;
+          currentHolderDeck = currentHolderDeck  + 1;
+          TempholderDeck.setID(currentHolderDeck);
+          holderContainer.push(TempholderDeck);
+          holderContainer.returnSpecificDeck(currentHolderDeck);
+          cout << "currentHolderDeck  " <<currentHolderDeck<< endl;           
+      }
+   }
+
+  }
   //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@///
   //
   //
@@ -156,7 +210,12 @@ int main()
   //
   //
 
-
+  } catch (const char *ex) {
+    cout << "\n\nException detected:\n";
+    cout << ex << endl;
+  } catch (...) {
+    cout << "\n\nUnknown exception detected:\n";
+  }
 
 
   // cout << "Card created..." << endl;
