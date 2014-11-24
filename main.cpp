@@ -165,6 +165,11 @@ int main()
   bool found = false;
   int counter = 2;
 
+////////////////////////////////////////////////////////////////////////////////
+//   Main Loop
+/////////////////////////////////////////////////////////////////////////////////
+
+
   cout << "Number of decks " << currentDeck << endl;
    while (Container.getNoCardsDecks() > 0)
   {
@@ -177,12 +182,12 @@ int main()
    {
     cout << "here Holder Size " << holderContainer.accessPoppedData()->getSize() << endl;
   
-
-if(counter%2 == 0)
+card topcard = Container.accessPoppedData()->getTopCard();
+if(counter % 2 == 0)
 {
-
+    found = false;
     //holderContainer.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
-    card topcard = Container.accessPoppedData()->getTopCard();
+
     card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
     if (found == true)
       {
@@ -213,8 +218,9 @@ if(counter%2 == 0)
 }
 else
 {
-    card topcard2 = Container.accessPoppedData()->getTopCard();
-    card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard2, found);
+    found = false;
+    // card topcard2 = Container.accessPoppedData()->getTopCard();
+    card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
     if (found == true)
       {
         counter = counter + 1;
