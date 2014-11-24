@@ -10,10 +10,6 @@ using namespace std;
 int main()
 {
   try{
-  // player P1(1);
-  // player P2(2);
-
-
   cardDeckContainer Container;
 
   int no_of_decks;
@@ -23,7 +19,7 @@ int main()
 
   for (int i = 0; i < no_of_decks; ++i)
   {
-    cout << "\nCdECK ID = \n" << (i+1) << endl;
+    //cout << "\nCdECK ID = \n" << (i+1) << endl;
     //create sets of card decks (52 C's) for main deck, with INT ID's
     cardDeck cd(52,(i+1));
     cd.fill();
@@ -34,65 +30,6 @@ int main()
     // with gotoHead() beforehand
     Container.push(cd);
   }
-
-
-  ////////////////////////////////////////////////////////#
-  //   AccessPoppedData() does not remove data
-  //   just a name remnant from another program
-  ///////////////////////////////////////////////////////////
-
-  // You access the elements manually by traversing the 
-  // LIST with gotonextnode() gottohead() getSuccessor and so on
-
-  // but i haver also added the below way of just searching
-  // by ID returnSpecificDeck()
-  // needs to be accessed with accessPoppedData() afterwards
-
-  // Container.printList();
-
-  // cout << endl;
-  // //need to add error handling for an non-existant ID
-  // // returnSpecificDeck places the CARDDECK object in temp storage
-  // Container.returnSpecificDeck(3);
-  // //acccessed with accessPoppedData()
-  // cardDeck *obj = Container.accessPoppedData();
-  // cout << "Returened specific Deck bY id " << obj->getID() << endl;
-  // cout << "accessed deck -- size" << obj->getSize() << endl;
-  // //obj->testListContents();
-  // cout << endl;
-
-  // // Creates a single card
-  // card c1(card::Clubs, card::Two);
-
-  // cout << "Example of searching for a card of speific rank or suit" << endl;
-  // cout << "Searching for Either a Two OR Clubs" <<endl;
-  // cout << endl;
-
-  // cout << "  container size " << endl;
-  // cout << Container.accessPoppedData()->getSize() << endl;
-
-
-  // cout << "testListContents" << endl;
-  // obj->testListContents();
-  // card tempcard = obj->getSpecificCard(c1);
-
-  // cout << "Returned card = "  << tempcard.getRankAsString() << " " << tempcard.getSuitAsString() << endl;
-  // cout << endl;
-
-  // cout << "testListContents after found an removed card" << endl;
-  // obj->testListContents();
-
-  // cout << "Number of Decks in Main Deck Container :" << Container.getNoCardsDecks() << endl;
-
-  
-  // set up a container for each player one with empty deck
-  // using a container because depending on game size, and pick ups
-  // gives room for further decks 
-  // a limitiation in our implemenation 
-  // should have used a linked list from the star/
-  ////////////////////////////////////////////
-  /// players containers//////////////////
-  // for the played cards decks////////
   cardDeckContainer player1Container;
   cardDeck Player1Deck;
   Player1Deck.setID(1);
@@ -112,10 +49,6 @@ int main()
   holderDeck.setID(1);
   holderContainer.push(holderDeck);
 
-
-  //cout << "Number of Decks in PLayer Deck Container :" << playerDecks.getNoCardsDecks() << endl;
-
-
   // this loop demos  placing seven cards into the player
   // decks one at a time
   // first get the number of decks in the container
@@ -129,16 +62,13 @@ int main()
   // cout << " player 2 container size" << endl;
   // cout << player2Container.accessPoppedData()->getSize() << endl;
 
-  cout << "  container size  " << endl;
-  cout << Container.accessPoppedData()->getSize() << endl;
+ // cout << "  container size  " << endl;
+  //cout << Container.accessPoppedData()->getSize() << endl;
 
   for (int i = 1;i <= 14; ++i)
   {
     if((i+2)%2 == 0)
     {
-      // returns top deck from main container - will cause issue if  that was popped
-      // grand here though
-     //cardDeck temp  = Container.returnSpecificDeck(numberDecksMainContainer);
 
      player2Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
     }
@@ -149,14 +79,9 @@ int main()
     }
   }
 
-  cout << "  container size after" << endl;
-  cout << Container.accessPoppedData()->getSize() << endl;
+  //cout << "  container size after" << endl;
+ // cout << Container.accessPoppedData()->getSize() << endl;
 
-
-
-  /// this is trickey, when decks become empty and when decks become full
-  // such as the holderDeck for the played cards
-  // JUst writing init method - 
   holderContainer.returnSpecificDeck(1);
   int currentHolderDeck = 1;
   int currentDeck = Container.getNoCardsDecks();
@@ -170,7 +95,7 @@ int main()
 /////////////////////////////////////////////////////////////////////////////////
 
 
-  cout << "Number of decks " << currentDeck << endl;
+  //cout << "Number of decks " << currentDeck << endl;
    while (Container.getNoCardsDecks() > 0)
   {
   
@@ -180,42 +105,43 @@ int main()
    if(Container.accessPoppedData()->getSize() > 0 
     && holderContainer.accessPoppedData()->getSize() < 52)
    {
-    cout << "here Holder Size " << holderContainer.accessPoppedData()->getSize() << endl;
-  
-card topcard = Container.accessPoppedData()->getTopCard();
-if(counter % 2 == 0)
-{
-    found = false;
-    //holderContainer.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+   // cout << "here Holder Size " << holderContainer.accessPoppedData()->getSize() << endl;
+    
+    // Get out the Top card for comparision with Either Player one or player 2
+    card topcard = Container.accessPoppedData()->getTopCard();
+    if(counter % 2 == 0)
+    {
+        found = false;
+        //holderContainer.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
 
-    card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
-    if (found == true)
-      {
-        counter = counter + 1;
-        cout << "Player 1 has a matching card!" << endl;
-        // remove found card from player1's deck
-        player1Container.accessPoppedData()->getSpecificCard(cardToAdd);
-        // Add found card to played cards
-        holderContainer.accessPoppedData()->addCard(cardToAdd);
-        // Finally check if player 1's hand is empty
-        if (player1Container.accessPoppedData()->getNumberOfCards() == 0)
-        {
-          cout << "Player 1 is the winner!!" << endl;
-          return 0 ;
-        }
-      }
-      else
-      {
-        cout << "Player 1 has no matching cards" << endl;
-        cout << "Player 1 draws a card" << endl;
+        card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
+        if (found == true)
+          {
+            counter = counter + 1;
+            cout << "Player 1 has a matching card!" << endl;
+            // remove found card from player1's deck
+            player1Container.accessPoppedData()->getSpecificCard(cardToAdd);
+            // Add found card to played cards
+            holderContainer.accessPoppedData()->addCard(cardToAdd);
+            // Finally check if player 1's hand is empty
+            if (player1Container.accessPoppedData()->getNumberOfCards() == 0)
+            {
+              cout << "Player 1 is the winner!!" << endl;
+              return 0 ;
+            }
+          }
+          else
+          {
+            cout << "Player 1 has no matching cards" << endl;
+            cout << "Player 1 draws a card" << endl;
+            // add card from container deck to player 1 deck
+            // so we want to remove the top card from the container
+            player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+            counter = counter + 1;
+          }
 
-        // add card from container deck to player 1 deck
-        // so we want to remove the top card from the container
-        player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
-        counter = counter + 1;
-      }
-
-}
+    }
+///////////////////////////// PLayer 2 Section ///////////////////////////////////
 else
 {
     found = false;
@@ -248,30 +174,32 @@ else
       }
 
 }
-
+    /////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////Switching Through Decks Section////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
    }
    else
    {
 
       if(Container.accessPoppedData()->getSize() == 0)
       {
-        cout << "****************Deck Deleted******************** " << endl;
+        //cout << "****************Deck Deleted******************** " << endl;
         Container.del_empty();
         currentDeck = currentDeck -1;
       }
-      cout << "$$$$$$$$Current Container Deck$$$$$$$$$$$$$$$$$ " << currentDeck << endl;
+      //ut << "$$$$$$$$Current Container Deck$$$$$$$$$$$$$$$$$ " << currentDeck << endl;
       
       Container.returnSpecificDeck(currentDeck);
 
       if (holderContainer.accessPoppedData()->getSize() > 51)
       {
-          cout << "Here at second " << endl; 
+          //cout << "Here at second " << endl; 
           cardDeck TempholderDeck;
           currentHolderDeck = currentHolderDeck  + 1;
           TempholderDeck.setID(currentHolderDeck);
           holderContainer.push(TempholderDeck);
           holderContainer.returnSpecificDeck(currentHolderDeck);
-          cout << "currentHolderDeck  " <<currentHolderDeck<< endl;           
+          //cout << "currentHolderDeck  " <<currentHolderDeck<< endl;           
       }
    }
 
