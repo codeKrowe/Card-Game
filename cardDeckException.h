@@ -1,3 +1,9 @@
+// Implementation of a linkedlist of decks
+//
+//
+// authors: Jonathan, Cathal, Nidhu
+// date:  19.11.2014
+//////////////////////////////////////////////////////////////////////
 #ifndef CARDDECKEXCEPTION_H
 #define CARDDECKEXCEPTION_H
 

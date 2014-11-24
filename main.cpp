@@ -83,8 +83,8 @@ int main()
     while (Container.getNoCardsDecks() > 0)
     {
 
-     if(Container.accessPoppedData()->getSize() > 0
-      && playedCardsContainer.accessPoppedData()->getSize() < 52)
+     if(Container.accessPoppedData()->getNumberOfCards() > 0
+      && playedCardsContainer.accessPoppedData()->getNumberOfCards() < 52)
      {
 
       // Get out the Top card for comparision with Either Player one or player 2
@@ -164,7 +164,7 @@ int main()
      }
      else
      {
-        if(Container.accessPoppedData()->getSize() == 0)
+        if(Container.accessPoppedData()->getNumberOfCards() == 0)
         {
           Container.del_empty();
           currentDeck = currentDeck -1;
@@ -172,7 +172,7 @@ int main()
 
         Container.returnSpecificDeck(currentDeck);
 
-        if (playedCardsContainer.accessPoppedData()->getSize() > 51)
+        if (playedCardsContainer.accessPoppedData()->getNumberOfCards() > 51)
         {
           cardDeck TempholderDeck;
           currentHolderDeck = currentHolderDeck  + 1;

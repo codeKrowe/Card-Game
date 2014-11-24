@@ -1,9 +1,8 @@
-// cardDeckContainer.cpp: implementation of the llist class.
+// Class for custom deck exceptions
 //
-// simple implementation of single linked list
-// 
+//
 // authors: Jonathan, Cathal, Nidhu
-// date:	17.10.2003
+// date:	19.11.2014
 //////////////////////////////////////////////////////////////////////
 
 #include <cstdlib>
@@ -29,7 +28,7 @@ using namespace std;
 // list()
 // default constructor of linked list, creates an empty linked list
 // consisting of head and tail, head points to tail
-// 
+//
 // parameter: none
 //////////////////////////////////////////////////////////////////////
 cardDeckContainer::cardDeckContainer()
@@ -62,7 +61,7 @@ cardDeckContainer::cardDeckContainer()
 //////////////////////////////////////////////////////////////////////
 // llist(orig)
 // copy constructor
-// as class makes use of dynamic memory allocation, explicit copy 
+// as class makes use of dynamic memory allocation, explicit copy
 // constructor is required. creates an exact copy of orig.
 //
 // parameter: llist &orig - reference to original linked list
@@ -79,12 +78,12 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
     // allocate nodes for new list
     head = new llnode(dummy);
     tail = new llnode(dummy);
-    
+
     // adjust links
     head->setSuccessor(tail);
     tail->setSuccessor(NULL);
     current = head;
-    
+
     // copy contents of linked list
     orig.gotoHead();
     while (orig.gotoNextNode() == ok) {
@@ -92,7 +91,7 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
       insertNode(orig.accessData());
       gotoNextNode();
     }
-    
+
     // find current node in original and copied list
     orig.gotoHead();
     gotoHead();
@@ -113,9 +112,9 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
     // throw exception
     throw "Allocation Error in copy constructor llist(orig)";
   }
-    
+
 }
-  
+
 //////////////////////////////////////////////////////////////////////
 // ~llist()
 // destructor
@@ -163,8 +162,8 @@ cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
   } catch (bad_alloc ex) {
     // deal with allocation failure
     returnvalue = noMemory;
-  }    
-  return returnvalue;		
+  }
+  return returnvalue;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -174,7 +173,7 @@ cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
 //
 // parameter: none
 // return: ok - goto successfull
-//         illegalNode - successor of current is tail 
+//         illegalNode - successor of current is tail
 //////////////////////////////////////////////////////////////////////
 cardDeckContainer::llError cardDeckContainer::gotoNextNode()
 {
@@ -212,7 +211,7 @@ cardDeckContainer::llError cardDeckContainer::deleteNode(cardDeck &d)
       delnode = current;
       break;
     }
-  } 
+  }
 
   // test if node carrying data has been found
   if (foundNode) {
@@ -251,7 +250,7 @@ cardDeckContainer::llError cardDeckContainer::returnSpecificDeck(int ID)
       obby = &current->getData();
       break;
     }
-  } 
+  }
 
   // test if node carrying data has been found
   if (foundNode) {
@@ -285,25 +284,25 @@ cardDeck &cardDeckContainer::accessData()
 //////////////////////////////////////////////////////////////////////
 // printList()
 // prints the entire linked list to the screen (standard output)
-// attention: the member current of the linked list should not be 
+// attention: the member current of the linked list should not be
 // modified
 //
 // parameter: none
 // return: void
 //////////////////////////////////////////////////////////////////////
-void cardDeckContainer::printList() 
+void cardDeckContainer::printList()
 {
   llnode *printCurrent=head->getSuccessor();
   cout << "Head" << endl;
   while (printCurrent != tail) {
-    cout << "ID: " 
+    cout << "ID: "
 	   << printCurrent->getData().getID() << endl;
     printCurrent = printCurrent->getSuccessor();
   }
 	cout << "Tail" << endl;
 }
 
-bool cardDeckContainer::push(cardDeck &data) 
+bool cardDeckContainer::push(cardDeck &data)
 {
   //return status
   bool returnvalue=true;
@@ -316,7 +315,7 @@ bool cardDeckContainer::push(cardDeck &data)
     if (current == tail) {
       returnvalue = false;
     } else {
-      // insert node to top of the stack undearneath the Head 
+      // insert node to top of the stack undearneath the Head
       newnode = new llnode(data,current->getSuccessor());
       newnode->setSuccessor(current->getSuccessor());
       current->setSuccessor(newnode);
@@ -325,16 +324,16 @@ bool cardDeckContainer::push(cardDeck &data)
   } catch (bad_alloc ex) {
     // deal with allocation failure
     returnvalue = noMemory;
-  }    
-  return returnvalue;   
+  }
+  return returnvalue;
 }
 
 
 //////////////////////////////////////////////////////////////////////
 // pop()
-// removes the successor of HEAD from the stack 
+// removes the successor of HEAD from the stack
 //
-// stores the nodes object for access 
+// stores the nodes object for access
 // through another method accessPoppedData()
 //
 // parameter: none
@@ -342,7 +341,7 @@ bool cardDeckContainer::push(cardDeck &data)
 //         status - cannot find or can find node to be removed.
 //////////////////////////////////////////////////////////////////////
 
-bool cardDeckContainer::pop() 
+bool cardDeckContainer::pop()
 {
 
   bool status = false;
@@ -379,7 +378,7 @@ bool cardDeckContainer::pop()
 }
 
 
-bool cardDeckContainer::del_empty() 
+bool cardDeckContainer::del_empty()
 {
 
   bool status = false;
@@ -452,7 +451,7 @@ cardDeck *cardDeckContainer::accessPoppedData()
 // parameter: data newd - data for the new node
 //            llnode *nextNode - pointer to successor of new node
 //////////////////////////////////////////////////////////////////////
-llnode::llnode(cardDeck newd, llnode *nextNode) 
+llnode::llnode(cardDeck newd, llnode *nextNode)
   : d(newd), successor(nextNode)
 {
 }

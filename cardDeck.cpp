@@ -1,15 +1,16 @@
-//
+// Class for cardDeck
 //
 // authors:	Jonathan, Cathal, Nidhu
 // date:	01.11.2014
 //////////////////////////////////////////////////////////////////////
-#include <cstdlib>
 #include <iostream>
+#include <cstdlib>
+#include <stdio.h>
+#include <string>
 #include "card.h"
 #include "cardDeck.h"
 #include "cardDeckException.h"
-#include <string>
-#include <stdio.h>
+
 using namespace std;
 
 
@@ -43,15 +44,15 @@ cardDeck::cardDeck()
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(int newSize, int ID)
 {
-  
   id = ID;
-
   size = newSize;
-  try {
-    //deck = new int[size];
+
+  try
+  {
     cdeck = new card[size];
-    //cdeck = new card[size]
-  } catch (bad_alloc ex) {
+  }
+  catch (bad_alloc ex)
+  {
     // report error to cerr and rethrow exception
     cerr << "Error with allocation of memory "
     << "deck(newsize)\n";
@@ -67,21 +68,20 @@ cardDeck::cardDeck(int newSize, int ID)
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(cardDeck &orig)
 {
-
-  //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //   /// 
-  //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  try {
+  try
+  {
     size = orig.size;
     id = orig.getID();
     cdeck = new card[size];
 
     for (int i=0; i<size; i++)
       cdeck[i] = orig.cdeck[i];
-  } catch (bad_alloc ex) {
+  }
+  catch (bad_alloc ex)
+  {
     // report error to cerr and rethrow exception
     cerr << "Error when allocation memory in copy constructor "
-	 << "dynArray(orig)\n";
+	  << "dynArray(orig)\n";
     throw ex;
   }
 }
@@ -94,118 +94,42 @@ cardDeck::cardDeck(cardDeck &orig)
 //
 // parameter: none
 //////////////////////////////////////////////////////////////////////
-
 cardDeck::~cardDeck()
 {
-	//delete[] deckContainer;
   delete[] cdeck;
-
-  //size = 0;
 }
 
-
-
 // Returns a specific card, doesn't delete it!
-
 card cardDeck::getCard(card c, bool &found)
 {
   int position;
   card temp;
 
-      for (int i =0; i < size; ++i)
-      {
-        if(cdeck[i].getCardRank() == c.getCardRank()
-          || cdeck[i].getCardSuit() == c.getCardSuit())
-        {
-          temp = cdeck[i];
-          found = true;
-        }
-      }
+  for (int i =0; i < size; ++i)
+  {
+    if(cdeck[i].getCardRank() == c.getCardRank()
+      || cdeck[i].getCardSuit() == c.getCardSuit())
+    {
+      temp = cdeck[i];
+      found = true;
+    }
+  }
 
   return temp;
-
 }
-
 
 //////////////////////////////////////////////////////////////////////
 //getNumberOfCards()
 //////////////////////////////////////////////////////////////////////
-
-
 int cardDeck::getNumberOfCards() const
 {
   return size;
 }
 
-//////////////////////////////////////////////////////////////////////
-//initialiseCardDeck(int setNum)
-//////////////////////////////////////////////////////////////////////
-
-void cardDeck::initialiseCardDeck(int setNumSets/*,cardDeck deck*/)
-{
-
-  /// Should be code here to create setNumsets amount of decks
-  // and fill them
-
-  int counter = 0;
-  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
-  {
-    for (int rank = card::Ace; rank <= card::King; ++rank)
-    {
-    if (counter < size)
-    {
-
-    card cc((card::Suit) suit, (card::Rank) rank);
-    cdeck[counter] = cc;}
-    counter = counter + 1;
-    }
-  }
-
-}
-
-void cardDeck::createInitialisedCardDeck(int s)
-{
-  int counter = 0;
-  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
-  {
-    for (int rank = card::Ace; rank <= card::King; ++rank)
-    {
-    if (counter < size)
-    {
-
-    card cc((card::Suit) suit, (card::Rank) rank);
-    cdeck[counter] = cc;}
-    counter = counter + 1;
-    }
-  }
-
-}
-
-// //////////////////////////////////////////////////////////////////////
-// // deleteCard()
-// //////////////////////////////////////////////////////////////////////
-
-// void cardDeck::deleteCard()
-// {
-//   // If less that the current size
-//   // then it is better to just reduce the
-//   // index total size rather than waste
-//   // processing copying
-//   //
-//   // Simple and effective
-//   try {
-//         size = size - 1;
-//         if(size < 0)
-//         {throw cardDeckException("Size in the negative -- incorrect");}
-//       }
-//         catch(cardDeckException ex)
-//         {cout << ex.getException() << endl; ++size;}
-// }
 
 //////////////////////////////////////////////////////////////////////
-// deleteCard()
+// getTopCard()
 //////////////////////////////////////////////////////////////////////
-
 card cardDeck::getTopCard()
 {
   // If less that the current size
@@ -218,20 +142,27 @@ card cardDeck::getTopCard()
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // THIS THROWS TO MAIN --- Needs Matching CATCH
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  try {
-        int size2 = size - 1;
-        if(size2 < 0)
-        {throw cardDeckException("Size in the negative -- incorrect");}
-      else {temp= cdeck[size];size = size - 1;}
-      }
-        catch(cardDeckException ex)
-        // Silence this because it show randomly in output of game
-        // but this has no effect on the game because only temp size2 has been changed
-        {/*cout << ex.getException() << endl;*/ex.getException();}
-
-        return temp;
+  try
+  {
+    int size2 = size - 1;
+    if(size2 < 0)
+    {
+      throw cardDeckException("Size in the negative -- incorrect");
     }
-
+    else
+    {
+      temp= cdeck[size];
+      size = size - 1;
+    }
+  }
+  catch(cardDeckException ex)
+  // Silence this because it show randomly in output of game
+  // but this has no effect on the game because only temp size2 has been changed
+  {/*cout << ex.getException() << endl;*/
+    ex.getException();
+  }
+  return temp;
+}
 
 // Returns a specific card, when it finds the card it deletes it while
 // moving the cards above it down one postition
@@ -240,30 +171,30 @@ card cardDeck::getSpecificCard(card c)
 {
   int position;
   card temp;
- 
-      for (int i =0; i < size; ++i)
-      {
-        if(cdeck[i].getCardRank() == c.getCardRank() 
-          || cdeck[i].getCardSuit() == c.getCardSuit() )
-        {
-          size = size - 1;
-          temp = cdeck[i];
-          for (int j = i; j <size; ++j )
-          {
-            cdeck[j] = cdeck[j+1];
-          }
-          //needs a break otherwise may delete 2 indexs as the suit and
-          //rank may exist in the deck.
-          break;
-        }
-      }
-        return temp;
 
+  for (int i =0; i < size; ++i)
+  {
+    if(cdeck[i].getCardRank() == c.getCardRank()
+      || cdeck[i].getCardSuit() == c.getCardSuit() )
+    {
+      size = size - 1;
+      temp = cdeck[i];
+      for (int j = i; j <size; ++j )
+      {
+        cdeck[j] = cdeck[j+1];
+      }
+      //needs a break otherwise may delete 2 indexs as the suit and
+      //rank may exist in the deck.
+      break;
+    }
+  }
+
+  return temp;
 }
+
 //////////////////////////////////////////////////////////////////////
 // addCard()
 //////////////////////////////////////////////////////////////////////
-
 bool cardDeck::addCard(card passedCard)
 {
   /*
@@ -282,28 +213,43 @@ bool cardDeck::addCard(card passedCard)
   int i;
   card *newDeck;
 
-  try{
-      int newsize = size +1;
-      if (newsize > 52)
-      {throw cardDeckException("Size is incorrect");}
+  try
+  {
+    int newsize = size +1;
+    if (newsize > 52)
+    {
+      throw cardDeckException("Size is incorrect");
+    }
 
-      newDeck = new card[newsize];
-      for (i=0; i<newsize; i++)
-        {
-        if (i<size) newDeck[i] = cdeck[i];
-        else newDeck[i] = passedCard;
-        }
-        // deallocate old memory
-        delete[] cdeck;
-        // use newdata as data
-        cdeck = newDeck;
-        size = newsize;
-        status = true;
+    newDeck = new card[newsize];
+    for (i=0; i<newsize; i++)
+    {
+      if (i<size)
+      {
+        newDeck[i] = cdeck[i];
       }
+      else
+      {
+        newDeck[i] = passedCard;
+      }
+    }
+    // deallocate old memory
+    delete[] cdeck;
+    // use newdata as data
+    cdeck = newDeck;
+    size = newsize;
+    status = true;
+  }
   catch(cardDeckException ex)
-  {cout << ex.getException() << endl;size = size - 1;}
+  {
+    cout << ex.getException() << endl;
+    size = size - 1;
+  }
   catch (bad_alloc memex)
-  {cerr << "Memory allocation Issue"  << endl;throw memex;}
+  {
+    cerr << "Memory allocation Issue"  << endl;
+    throw memex;
+  }
   return status;
 }
 
@@ -324,12 +270,6 @@ card &cardDeck::lookAtCard(int index) const
   return cdeck[index];
 }
 
-
-///////////////////////////////////////////////////////////
-//
-// Incomplete Funtions
-//////////////////////
-
 //////////////////////////////////////////////////////////////////////
 //moveAllCards(destination): Moves all cards
 //from the CardDeck source to CardDeck destination.
@@ -344,34 +284,26 @@ void cardDeck::moveAllCards(cardDeck &source, cardDeck &destination)
   // pass in 2 decks.
   // check if source deck size > 0
   // start looping through the source deck.
-    // copy object over to destination deck.
+  // copy object over to destination deck.
   // after all cards are copied over, delete cards from source
 
-  cout << "...In moveAllCards..." << endl;
+  int sourceSize = source.getNumberOfCards();
+  int destSize = destination.getNumberOfCards();
 
-  int sourceSize = source.getSize();
-  int destSize = destination.getSize();
-  cout << "Size of source deck before move:" << source.getSize() << endl;
-  cout << "Size of dest deck before move: " << destination.getSize() << endl;
-
-  if (source.getSize() > 0)
+  if (source.getNumberOfCards() > 0)
   {
     for (int i = 0; i < sourceSize; ++i)
     {
       // get card in source deck at position i
       card c = source.lookAtCard(i);
 
-      // cout << c.getSuitAsString() << " " << c.getRankAsString() << " " << i << endl;
-
       // add i'th card to destination deck
       destination.addCard(c);
     }
-      // all cards moved over, delete source deck
-    cout << "Size of source deck after move: " << source.getSize() << endl;
-    cout << "Size of dest deck after move: " << destination.getSize() << endl;
+
+    // all cards moved over, delete source deck
     // delete source;
     source.setSize(0);
-
   }
   else
   {
@@ -383,16 +315,16 @@ void cardDeck::moveAllCards(cardDeck &source, cardDeck &destination)
 // shuffleDeck()
 //
 //
-//Uses a starting seed from time and generates a random sequence
-//this sequecnce does not end up distributing uniformly
-//when attempting to generate a 52 number sequence,
-//so an "Mangled" Bubble swap has been used, where one
-//side of the swap is a random number(r) in range up to the
-//current counter postition counter (i).
-//This swaps at random, and so it doesnt matter if the same index
-//is swaped at some stage as both index objects
-//remain in the Deck regardless.
-//The counter decrements
+//  Uses a starting seed from time and generates a random sequence
+//  this sequecnce does not end up distributing uniformly
+//  when attempting to generate a 52 number sequence,
+//  so an "Mangled" Bubble swap has been used, where one
+//  side of the swap is a random number(r) in range up to the
+//  current counter postition counter (i).
+//  This swaps at random, and so it doesnt matter if the same index
+//  is swaped at some stage as both index objects
+//  remain in the Deck regardless.
+//  The counter decrements
 //
 //pre:a valid Deck exists
 //post:the contents of that deck have been shuffled
@@ -409,7 +341,6 @@ void cardDeck::shuffleDeck()
       cdeck[r] = temp;
     }
 }
-
 
 void cardDeck::fill()
 {
@@ -428,14 +359,6 @@ void cardDeck::fill()
   }
 }
 
-
-void cardDeck::deleteCardDeck()
-{
-
-
-}
-
-
 void cardDeck::setSize(int s)
 {
 	size = s;
@@ -451,26 +374,6 @@ void cardDeck::testListContents()
 {
     for (int i=0; i<size; ++i)
     {
-    cout << cdeck[i].getSuitAsString() << " " << cdeck[i].getRankAsString() << endl;
+      cout << cdeck[i].getSuitAsString() << " " << cdeck[i].getRankAsString() << endl;
     }
-}
-
-void cardDeck::fillcards()
-{
-  size = 52;
-  int counter = 0;
-  for (int suit = card::Clubs; suit <= card::Diamonds; ++suit)
-  {
-    for (int rank = card::Ace; rank <= card::King; ++rank)
-    {
-      counter = counter + 1;
-      card cc((card::Suit) suit, (card::Rank) rank);
-      cdeck[counter] = cc;
-    }
-  }
-}
-
-card &cardDeck::accessCard(int index)
-{
-  return cdeck[index];
 }

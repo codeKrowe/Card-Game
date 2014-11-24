@@ -1,6 +1,9 @@
 // Definition of a card class
 //
 // Contains very basic card structure.
+// authors: Jonathan, Cathal, Nidhu
+// date:    01.11.2014
+//////////////////////////////////////////////////////////////////////
 #ifndef CARD_H
 #define CARD_H
 
@@ -17,12 +20,10 @@ public:
     typedef enum {Ace, Two, Three, Four, Five, Six,
                   Seven, Eight, Nine, Ten, Jack, Queen, King} Rank;
 
-    // Needed Generic/Default for object array decla
-    card();
-   // Create card of suit and rank
-    card(Suit suit, Rank rank);
     //default constructor required for custom onject array
-
+    card();
+    // Create card of suit and rank
+    card(Suit suit, Rank rank);
 
     // Accessors
     inline Rank getCardRank() {return rank;}

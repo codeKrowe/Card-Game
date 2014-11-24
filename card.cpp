@@ -1,6 +1,9 @@
 // Definition of a card class
 //
 // Contains very basic card structure.
+// authors: Jonathan, Cathal, Nidhu
+// date:  01.11.2014
+//////////////////////////////////////////////////////////////////////
 #include "card.h"
 
 card::card()
