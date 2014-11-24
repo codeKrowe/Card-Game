@@ -109,12 +109,15 @@ int main()
     
     // Get out the Top card for comparision with Either Player one or player 2
     card topcard = Container.accessPoppedData()->getTopCard();
+
+   // cout << "The Open Card is "<< topcard.getSuitAsString() << " " << topcard.getRankAsString() << endl; 
     if(counter % 2 == 0)
     {
         found = false;
         //holderContainer.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
 
         card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
+        cout << "Player 1 plays " << cardToAdd.getRankAsString() << " " << cardToAdd.getSuitAsString() <<endl;
         if (found == true)
           {
             counter = counter + 1;
@@ -147,6 +150,8 @@ else
     found = false;
     // card topcard2 = Container.accessPoppedData()->getTopCard();
     card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
+    cout << "Player 2 plays " << cardToAdd2.getRankAsString() << " " << cardToAdd2.getSuitAsString() <<endl;
+
     if (found == true)
       {
         counter = counter + 1;
