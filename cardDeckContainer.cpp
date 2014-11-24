@@ -36,8 +36,8 @@ cardDeckContainer::cardDeckContainer()
 {
   try{
     cardDeck dummy;
-    head = new llnode(dummy);
-    tail = new llnode(dummy);
+    head = new llDeckNode(dummy);
+    tail = new llDeckNode(dummy);
     // adjust links
     head->setSuccessor(tail);
     tail->setSuccessor(NULL);
@@ -73,11 +73,11 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
     obby = orig.accessPoppedData();
     cardDeck dummy;
     // safe old current node
-    llnode *oldcurrent = orig.current;
+    llDeckNode *oldcurrent = orig.current;
     NoCardDecks = orig.getNoCardsDecks();
     // allocate nodes for new list
-    head = new llnode(dummy);
-    tail = new llnode(dummy);
+    head = new llDeckNode(dummy);
+    tail = new llDeckNode(dummy);
 
     // adjust links
     head->setSuccessor(tail);
@@ -146,7 +146,7 @@ cardDeckContainer::~cardDeckContainer()
 cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
 {
 
-  llnode *newnode;
+  llDeckNode *newnode;
   llError returnvalue=ok;
   try {
     // test if insertion is possible at current location
@@ -154,7 +154,7 @@ cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
       returnvalue = illegalNode;
     } else {
       // insert node
-      newnode = new llnode(newdata,current->getSuccessor());
+      newnode = new llDeckNode(newdata,current->getSuccessor());
       newnode->setSuccessor(current->getSuccessor());
       current->setSuccessor(newnode);
       NoCardDecks = NoCardDecks + 1;
@@ -199,7 +199,7 @@ cardDeckContainer::llError cardDeckContainer::gotoNextNode()
 //////////////////////////////////////////////////////////////////////
 cardDeckContainer::llError cardDeckContainer::deleteNode(cardDeck &d)
 {
-  llnode *delnode=NULL, *delnodePredecessor=NULL;
+  llDeckNode *delnode=NULL, *delnodePredecessor=NULL;
   llError returnvalue=illegalNode;
   bool foundNode=false;
   current = head;
@@ -292,7 +292,7 @@ cardDeck &cardDeckContainer::accessData()
 //////////////////////////////////////////////////////////////////////
 void cardDeckContainer::printList()
 {
-  llnode *printCurrent=head->getSuccessor();
+  llDeckNode *printCurrent=head->getSuccessor();
   cout << "Head" << endl;
   while (printCurrent != tail) {
     cout << "ID: "
@@ -308,7 +308,7 @@ bool cardDeckContainer::push(cardDeck &data)
   bool returnvalue=true;
   try {
     // Pointer for new node
-    llnode *newnode;
+    llDeckNode *newnode;
     // make sure starts at Head, current = head
     gotoHead();
     // double check
@@ -316,7 +316,7 @@ bool cardDeckContainer::push(cardDeck &data)
       returnvalue = false;
     } else {
       // insert node to top of the stack undearneath the Head
-      newnode = new llnode(data,current->getSuccessor());
+      newnode = new llDeckNode(data,current->getSuccessor());
       newnode->setSuccessor(current->getSuccessor());
       current->setSuccessor(newnode);
       NoCardDecks = NoCardDecks + 1;
@@ -346,7 +346,7 @@ bool cardDeckContainer::pop()
 
   bool status = false;
   // Pointers for node for deletion and its predecessor
-  llnode *delnode=NULL, *delnodePredecessor=NULL;
+  llDeckNode *delnode=NULL, *delnodePredecessor=NULL;
   //again start at head as this is a stack
   current = head;
   try{
@@ -383,7 +383,7 @@ bool cardDeckContainer::del_empty()
 
   bool status = false;
   // Pointers for node for deletion and its predecessor
-  llnode *delnode=NULL, *delnodePredecessor=NULL;
+  llDeckNode *delnode=NULL, *delnodePredecessor=NULL;
   //again start at head as this is a stack
   current = head;
   try{
@@ -436,22 +436,22 @@ cardDeck *cardDeckContainer::accessPoppedData()
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-// class llnode
+// class llDeckNode
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-// llnode(newd, nextNode)
+// llDeckNode(newd, nextNode)
 // default constructor
 // constructs a new node, associates newd as data and sets its
 // successor to nextNode
 //
 // parameter: data newd - data for the new node
-//            llnode *nextNode - pointer to successor of new node
+//            llDeckNode *nextNode - pointer to successor of new node
 //////////////////////////////////////////////////////////////////////
-llnode::llnode(cardDeck newd, llnode *nextNode)
+llDeckNode::llDeckNode(cardDeck newd, llDeckNode *nextNode)
   : d(newd), successor(nextNode)
 {
 }

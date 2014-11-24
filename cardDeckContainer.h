@@ -6,21 +6,21 @@
 #define CARDDECKCONTAINER_H
 
 // define single node of linked list
-class llnode {
+class llDeckNode {
  public:
-  llnode(cardDeck newd, llnode *nextNode=NULL);
+  llDeckNode(cardDeck newd, llDeckNode *nextNode=NULL);
   inline cardDeck &getData() { return d;}
-  inline llnode *getSuccessor() {return successor;}
-  inline void setSuccessor(llnode *nextNode){ successor = nextNode;}
+  inline llDeckNode *getSuccessor() {return successor;}
+  inline void setSuccessor(llDeckNode *nextNode){ successor = nextNode;}
  private:
   cardDeck d;
-  llnode *successor;
+  llDeckNode *successor;
 };
 
 
 
 // define linked list class
-class cardDeckContainer  
+class cardDeckContainer
 {
  public:
   bool push(cardDeck &data);
@@ -48,13 +48,13 @@ class cardDeckContainer
   cardDeckContainer(cardDeckContainer &orig);
   cardDeckContainer();
   virtual ~cardDeckContainer();
-  
+
  private:
   int NoCardDecks;
   cardDeck *obby;
-  llnode *head;
-  llnode *tail;
-  llnode *current;
+  llDeckNode *head;
+  llDeckNode *tail;
+  llDeckNode *current;
 };
 
-#endif 
+#endif
