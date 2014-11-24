@@ -225,7 +225,9 @@ card cardDeck::getTopCard()
       else {temp= cdeck[size];size = size - 1;}
       }
         catch(cardDeckException ex)
-        {cout << ex.getException() << endl;}
+        // Silence this because it show randomly in output of game
+        // but this has no effect on the game because only temp size2 has been changed
+        {/*cout << ex.getException() << endl;*/ex.getException();}
 
         return temp;
     }
