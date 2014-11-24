@@ -117,11 +117,12 @@ int main()
         //holderContainer.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
 
         card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
-        cout << "Player 1 plays " << cardToAdd.getRankAsString() << " " << cardToAdd.getSuitAsString() <<endl;
         if (found == true)
           {
             counter = counter + 1;
             cout << "Player 1 has a matching card!" << endl;
+            cout << "Player 1 plays " << cardToAdd.getRankAsString() << " " << cardToAdd.getSuitAsString() <<endl;
+
             // remove found card from player1's deck
             player1Container.accessPoppedData()->getSpecificCard(cardToAdd);
             // Add found card to played cards
@@ -150,12 +151,13 @@ else
     found = false;
     // card topcard2 = Container.accessPoppedData()->getTopCard();
     card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
-    cout << "Player 2 plays " << cardToAdd2.getRankAsString() << " " << cardToAdd2.getSuitAsString() <<endl;
 
     if (found == true)
       {
         counter = counter + 1;
         cout << "Player 2 has a matching card!" << endl;
+        cout << "Player 2 plays " << cardToAdd2.getRankAsString() << " " << cardToAdd2.getSuitAsString() <<endl;
+
         // remove found card from player1's deck
         player2Container.accessPoppedData()->getSpecificCard(cardToAdd2);
         // Add found card to played cards
