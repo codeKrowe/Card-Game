@@ -43,7 +43,7 @@ cardDeck::cardDeck()
 //////////////////////////////////////////////////////////////////////
 cardDeck::cardDeck(int newSize, int ID)
 {
-  
+
   id = ID;
 
   size = newSize;
@@ -69,7 +69,7 @@ cardDeck::cardDeck(cardDeck &orig)
 {
 
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //   /// 
+  //   ///
   //   //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   try {
     size = orig.size;
@@ -204,7 +204,40 @@ card cardDeck::getTopCard()
         {cout << ex.getException() << endl;}
 
         return temp;
+}
+
+card cardDeck::lookAtTopCard()
+{
+  // If less that the current size
+  // then it is better to just reduce the
+  // index total size rather than waste
+  // processing copying
+  //
+  // Simple and effective
+  card temp;
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // THIS THROWS TO MAIN --- Needs Matching CATCH
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  try
+  {
+    int size2 = size - 1;
+
+    if(size2 < 0)
+    {
+      throw cardDeckException("Size in the negative -- incorrect");
     }
+    else
+    {
+      temp= cdeck[size];
+    }
+  }
+  catch(cardDeckException ex)
+  {
+    cout << ex.getException() << endl;
+  }
+
+  return temp;
+}
 
 
 // Returns a specific card, when it finds the card it deletes it while
@@ -214,10 +247,10 @@ card cardDeck::getSpecificCard(card c)
 {
   int position;
   card temp;
- 
+
       for (int i =0; i < size; ++i)
       {
-        if(cdeck[i].getCardRank() == c.getCardRank() 
+        if(cdeck[i].getCardRank() == c.getCardRank()
           || cdeck[i].getCardSuit() == c.getCardSuit() )
         {
           size = size - 1;
@@ -232,6 +265,27 @@ card cardDeck::getSpecificCard(card c)
         }
       }
         return temp;
+
+}
+
+// Returns a specific card, doesn't delete it!
+
+card cardDeck::getCard(card c, bool &found)
+{
+  int position;
+  card temp;
+
+      for (int i =0; i < size; ++i)
+      {
+        if(cdeck[i].getCardRank() == c.getCardRank()
+          || cdeck[i].getCardSuit() == c.getCardSuit())
+        {
+          temp = cdeck[i];
+          found = true;
+        }
+      }
+
+  return temp;
 
 }
 //////////////////////////////////////////////////////////////////////

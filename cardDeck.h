@@ -25,21 +25,27 @@ class cardDeck
    //typedef enum  {player1 = 9999, player2 =10000} playingDecks;
 
 //////////////// Member Functions //////////////////////
-    
+
     //same as getSize -- one should be redundant
     int getNumberOfCards() const;
     //Mutator
     // access the topcard while "deleting" it.
     card getTopCard();
+    card lookAtTopCard();
     // gets a specific card and reorders the deck when removed
     card getSpecificCard(card c);
     // Returns a card but does not delete it
+
+    // get a card and return a boolean to let user know card is found
+    card getCard(card c, bool &found);
+
+
     card lookAtCard() const;
-    card &lookAtCard(int index) const;    
+    card &lookAtCard(int index) const;
     void deleteCardDeck();
     // Pop a card on to the top of the Deck
     bool addCard(card c);
-    // Shuffle a Decks cards 
+    // Shuffle a Decks cards
     void shuffleDeck();
     void initialiseCardDeck(int setNum/* ,cardDeckcontainer */);
     void createInitialisedCardDeck(int NumSets);
@@ -53,7 +59,7 @@ class cardDeck
     // return the number of cards in the Deck
     const int getSize(){return size;};
     // set the number of cards that will be in the Deck
-    void setSize(int s); 
+    void setSize(int s);
     //Return an  identifier for use in the linked list implementation
     int getID(){return id;};
     inline void setID(int ID){id = ID;}
