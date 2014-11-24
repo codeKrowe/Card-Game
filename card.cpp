@@ -33,7 +33,7 @@ string card::getRankAsString()
       rankString = "Four";
       break;
     case Five:
-      rankString = "Five";
+      rankString = "Fice";
       break;
     case Six:
       rankString = "Six";
