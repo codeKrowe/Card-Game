@@ -61,13 +61,11 @@ int main()
     {
       if((i+2)%2 == 0)
       {
-
-       player2Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+        player2Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
       }
       else
       {
-
-       player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+        player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
       }
     }
 
@@ -96,10 +94,10 @@ int main()
       {
           found = false;
           card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
+          counter = counter + 1;
 
           if (found == true)
             {
-              counter = counter + 1;
               cout << "Player 1 has a matching card!" << endl;
               cout << "Player 1 plays " << cardToAdd.getRankAsString() << " " << cardToAdd.getSuitAsString() <<endl;
 
@@ -108,6 +106,7 @@ int main()
               // Add found card to played cards
               playedCardsContainer.accessPoppedData()->addCard(cardToAdd);
               // Finally check if player 1's hand is empty
+
               if (player1Container.accessPoppedData()->getNumberOfCards() == 0)
               {
                 cout << "Player 1 is the winner!!" << endl;
@@ -121,7 +120,6 @@ int main()
               // Add card from container deck to player 1 deck
               // so we want to remove the top card from the container
               player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
-              counter = counter + 1;
             }
 
       }
@@ -130,10 +128,10 @@ int main()
   {
       found = false;
       card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
+      counter = counter + 1;
 
       if (found == true)
         {
-          counter = counter + 1;
           cout << "Player 2 has a matching card!" << endl;
           cout << "Player 2 plays " << cardToAdd2.getRankAsString() << " " << cardToAdd2.getSuitAsString() <<endl;
 
@@ -142,6 +140,7 @@ int main()
           // Add found card to played cards
           playedCardsContainer.accessPoppedData()->addCard(cardToAdd2);
           // Finally check if player 1's hand is empty
+
           if (player2Container.accessPoppedData()->getNumberOfCards() == 0)
           {
             cout << "Player 2 is the winner!!" << endl;
@@ -156,7 +155,6 @@ int main()
           // add card from container deck to player 1 deck
           // so we want to remove the top card from the container
           player2Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
-          counter = counter + 1;
         }
 
   }
@@ -176,16 +174,13 @@ int main()
 
         if (playedCardsContainer.accessPoppedData()->getSize() > 51)
         {
-            //cout << "Here at second " << endl;
-            cardDeck TempholderDeck;
-            currentHolderDeck = currentHolderDeck  + 1;
-            TempholderDeck.setID(currentHolderDeck);
-            playedCardsContainer.push(TempholderDeck);
-            playedCardsContainer.returnSpecificDeck(currentHolderDeck);
-            //cout << "currentHolderDeck  " <<currentHolderDeck<< endl;
+          cardDeck TempholderDeck;
+          currentHolderDeck = currentHolderDeck  + 1;
+          TempholderDeck.setID(currentHolderDeck);
+          playedCardsContainer.push(TempholderDeck);
+          playedCardsContainer.returnSpecificDeck(currentHolderDeck);
         }
      }
-
     }
   }
   catch (const char *ex)
