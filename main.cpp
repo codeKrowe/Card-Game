@@ -80,57 +80,67 @@ int main()
   //   Main Loop
   /////////////////////////////////////////////////////////////////////////////////
 
+    // boolean to indicate if cards from game deck have
+    // run out and a reshuffle of the played cards has occurred
+    bool shuffled = false;
+
     while (Container.getNoCardsDecks() > 0)
     {
 
-     if(Container.accessPoppedData()->getNumberOfCards() > 0
-      && playedCardsContainer.accessPoppedData()->getNumberOfCards() < 52)
-     {
-
-      // Get out the Top card for comparision with Either Player one or player 2
-      card topcard = Container.accessPoppedData()->getTopCard();
-
-      if(counter % 2 == 0)
+      if (shuffled == true)
       {
+        // Game is a draw, terminate
+        cout << "Game is a draw, no winnners this time!" << endl;
+        return 0;
+      }
+
+      if(Container.accessPoppedData()->getNumberOfCards() > 0
+      && playedCardsContainer.accessPoppedData()->getNumberOfCards() < 52)
+      {
+
+        // Get out the Top card for comparision with Either Player one or player 2
+        card topcard = Container.accessPoppedData()->getTopCard();
+
+        if(counter % 2 == 0)
+        {
           found = false;
           card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
           counter = counter + 1;
 
           if (found == true)
+          {
+            cout << "Player 1 has a matching card!" << endl;
+            cout << "Player 1 plays " << cardToAdd.getRankAsString() << " " << cardToAdd.getSuitAsString() <<endl;
+
+            // Remove found card from player1's deck
+            player1Container.accessPoppedData()->getSpecificCard(cardToAdd);
+            // Add found card to played cards
+            playedCardsContainer.accessPoppedData()->addCard(cardToAdd);
+            // Finally check if player 1's hand is empty
+
+            if (player1Container.accessPoppedData()->getNumberOfCards() == 0)
             {
-              cout << "Player 1 has a matching card!" << endl;
-              cout << "Player 1 plays " << cardToAdd.getRankAsString() << " " << cardToAdd.getSuitAsString() <<endl;
-
-              // Remove found card from player1's deck
-              player1Container.accessPoppedData()->getSpecificCard(cardToAdd);
-              // Add found card to played cards
-              playedCardsContainer.accessPoppedData()->addCard(cardToAdd);
-              // Finally check if player 1's hand is empty
-
-              if (player1Container.accessPoppedData()->getNumberOfCards() == 0)
-              {
-                cout << "Player 1 is the winner!!" << endl;
-                return 0 ;
-              }
+              cout << "Player 1 is the winner!!" << endl;
+              return 0 ;
             }
-            else
-            {
-              cout << "Player 1 has no matching cards" << endl;
-              cout << "Player 1 draws a card" << endl;
-              // Add card from container deck to player 1 deck
-              // so we want to remove the top card from the container
-              player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
-            }
+          }
+          else
+          {
+            cout << "Player 1 has no matching cards" << endl;
+            cout << "Player 1 draws a card" << endl;
+            // Add card from container deck to player 1 deck
+            // so we want to remove the top card from the container
+            player1Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
+          }
+        }
+      ///////////////////////////// PLayer 2 Section ///////////////////////////////////
+      else
+      {
+        found = false;
+        card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
+        counter = counter + 1;
 
-      }
-  ///////////////////////////// PLayer 2 Section ///////////////////////////////////
-  else
-  {
-      found = false;
-      card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
-      counter = counter + 1;
-
-      if (found == true)
+        if (found == true)
         {
           cout << "Player 2 has a matching card!" << endl;
           cout << "Player 2 plays " << cardToAdd2.getRankAsString() << " " << cardToAdd2.getSuitAsString() <<endl;
@@ -156,22 +166,28 @@ int main()
           // so we want to remove the top card from the container
           player2Container.accessPoppedData()->addCard(Container.accessPoppedData()->getTopCard());
         }
-
-  }
+      }
       /////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////Switching Through Decks Section////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////
      }
      else
      {
+        // if the current deck in the container is empty
+        // i.e all cards turned over from deck 1
         if(Container.accessPoppedData()->getNumberOfCards() == 0)
         {
+          // delete that deck object from container
           Container.del_empty();
+          // update and move onto next deck
           currentDeck = currentDeck -1;
         }
 
+        // set next deck to use
         Container.returnSpecificDeck(currentDeck);
 
+        // if played cards deck becomes full
+        // create another deck and start filling that one
         if (playedCardsContainer.accessPoppedData()->getNumberOfCards() > 51)
         {
           cardDeck TempholderDeck;
@@ -180,7 +196,39 @@ int main()
           playedCardsContainer.push(TempholderDeck);
           playedCardsContainer.returnSpecificDeck(currentHolderDeck);
         }
-     }
+
+        // After the code section above, container will
+        // be set to another deck if one is available
+
+        // Check if containers current deck is empty
+        if (Container.accessPoppedData()->getNumberOfCards() == 0)
+        {
+          cout << "Game deck is empty!" << endl;
+          // Take current deck in playedCardsContainer, move all
+          // but top most card to hidden deck.
+
+          // Before move, store last played card.
+          card lastplayed = playedCardsContainer.accessPoppedData()->getTopCard();
+
+          // Move all cards that have been played to the game deck.
+          cardDeck::moveAllCards(playedCardsContainer.accessPoppedData(), playedCardsContainer.accessPoppedData());
+
+          // playedCardContainers, Deck is now empty
+
+          // Add back the last card played that we stored.
+          playedCardsContainer.accessPoppedData()->addCard(lastplayed);
+
+          // Shuffle new game deck
+          Container.accessPoppedData()->shuffleDeck();
+
+          // We've done a reshuffle of the played cards into the game deck once
+          // if no winner after this, game will end in a draw
+          shuffled = true;
+
+          cout << "\nCards already played mixed into a new game deck.\n" << endl;
+          cout << "Deck reshuffled..." << endl;
+        }
+      }
     }
   }
   catch (const char *ex)

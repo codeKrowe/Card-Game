@@ -279,7 +279,7 @@ card &cardDeck::lookAtCard(int index) const
 //to destination (which now contains additionally all cards previously in source)
 //////////////////////////////////////////////////////////////////////
 
-void cardDeck::moveAllCards(cardDeck &source, cardDeck &destination)
+void cardDeck::moveAllCards(cardDeck *source, cardDeck *destination)
 {
   // pass in 2 decks.
   // check if source deck size > 0
@@ -287,23 +287,23 @@ void cardDeck::moveAllCards(cardDeck &source, cardDeck &destination)
   // copy object over to destination deck.
   // after all cards are copied over, delete cards from source
 
-  int sourceSize = source.getNumberOfCards();
-  int destSize = destination.getNumberOfCards();
+  int sourceSize = source->getNumberOfCards();
+  int destSize = destination->getNumberOfCards();
 
-  if (source.getNumberOfCards() > 0)
+  if (source->getNumberOfCards() > 0)
   {
     for (int i = 0; i < sourceSize; ++i)
     {
       // get card in source deck at position i
-      card c = source.lookAtCard(i);
+      card c = source->lookAtCard(i);
 
       // add i'th card to destination deck
-      destination.addCard(c);
+      destination->addCard(c);
     }
 
     // all cards moved over, delete source deck
     // delete source;
-    source.setSize(0);
+    source->setSize(0);
   }
   else
   {

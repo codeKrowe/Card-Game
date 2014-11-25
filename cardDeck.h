@@ -56,7 +56,7 @@ class cardDeck
     void shuffleDeck();
 
     // Move all cards from one deck to another
-    static void moveAllCards(cardDeck &source, cardDeck &Destination);
+    static void moveAllCards(cardDeck *source, cardDeck *destination);
 
     // Check if two cardDeck id's match
     inline bool equals(cardDeck &d) {return id == d.id;}
