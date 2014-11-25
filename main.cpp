@@ -86,14 +86,6 @@ int main()
 
     while (Container.getNoCardsDecks() > 0)
     {
-
-      if (shuffled == true)
-      {
-        // Game is a draw, terminate
-        cout << "Game is a draw, no winnners this time!" << endl;
-        return 0;
-      }
-
       if(Container.accessPoppedData()->getNumberOfCards() > 0
       && playedCardsContainer.accessPoppedData()->getNumberOfCards() < 52)
       {
@@ -173,6 +165,47 @@ int main()
      }
      else
      {
+        // After the code section above, container will
+        // be set to another deck if one is available
+
+        // Check if containers current deck is empty
+        if (Container.accessPoppedData()->getNumberOfCards() == 0)
+        {
+          // deck shuffled once before already
+          // end game as a draw
+          if (shuffled == true)
+          {
+            // Game is a draw, terminate
+            cout << "Game is a draw, no winnners this time!" << endl;
+            return 0;
+          }
+
+          cout << "Game deck is empty!" << endl;
+          // Take current deck in playedCardsContainer, move all
+          // but top most card to hidden deck.
+
+          // Before move, store last played card.
+          card lastplayed = playedCardsContainer.accessPoppedData()->getTopCard();
+
+          // Move all cards that have been played to the game deck.
+          cardDeck::moveAllCards(playedCardsContainer.accessPoppedData(), Container.accessPoppedData());
+
+          // playedCardContainers, Deck is now empty
+
+          // Add back the last card played that we stored.
+          playedCardsContainer.accessPoppedData()->addCard(lastplayed);
+
+          // Shuffle new game deck
+          Container.accessPoppedData()->shuffleDeck();
+
+          // We've done a reshuffle of the played cards into the game deck once
+          // if no winner after this, game will end in a draw
+          shuffled = true;
+
+          cout << "\nCards already played mixed into a new game deck.\n" << endl;
+          cout << "Deck reshuffled..." << endl;
+        }
+
         // if the current deck in the container is empty
         // i.e all cards turned over from deck 1
         if(Container.accessPoppedData()->getNumberOfCards() == 0)
@@ -197,37 +230,6 @@ int main()
           playedCardsContainer.returnSpecificDeck(currentHolderDeck);
         }
 
-        // After the code section above, container will
-        // be set to another deck if one is available
-
-        // Check if containers current deck is empty
-        if (Container.accessPoppedData()->getNumberOfCards() == 0)
-        {
-          cout << "Game deck is empty!" << endl;
-          // Take current deck in playedCardsContainer, move all
-          // but top most card to hidden deck.
-
-          // Before move, store last played card.
-          card lastplayed = playedCardsContainer.accessPoppedData()->getTopCard();
-
-          // Move all cards that have been played to the game deck.
-          cardDeck::moveAllCards(playedCardsContainer.accessPoppedData(), playedCardsContainer.accessPoppedData());
-
-          // playedCardContainers, Deck is now empty
-
-          // Add back the last card played that we stored.
-          playedCardsContainer.accessPoppedData()->addCard(lastplayed);
-
-          // Shuffle new game deck
-          Container.accessPoppedData()->shuffleDeck();
-
-          // We've done a reshuffle of the played cards into the game deck once
-          // if no winner after this, game will end in a draw
-          shuffled = true;
-
-          cout << "\nCards already played mixed into a new game deck.\n" << endl;
-          cout << "Deck reshuffled..." << endl;
-        }
       }
     }
   }
