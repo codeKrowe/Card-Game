@@ -1,4 +1,4 @@
-// Implementation of a linkedlist of decks
+// CardDeck custom exception class
 //
 //
 // authors: Jonathan, Cathal, Nidhu
@@ -17,7 +17,9 @@ class cardDeckException
 
   public:
     cardDeckException();
+    //generic constructor with message set
     cardDeckException(string str);
+    //get the message
     string getException();
 
   private:

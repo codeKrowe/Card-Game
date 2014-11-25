@@ -1,4 +1,5 @@
-// Class for custom deck exceptions
+// Class for Deck Container System
+// Will hold the individual card deck objects
 //
 //
 // authors: Jonathan, Cathal, Nidhu
@@ -18,16 +19,16 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-// class llist
+// class cardDeckContainer
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-// list()
-// default constructor of linked list, creates an empty linked list
-// consisting of head and tail, head points to tail
+// cardDeckContainer()
+// default constructor of cardDeckContainer list, creates an empty cardDeckContainer
+// consisting of head and tail, with the head pointing to the tail
 //
 // parameter: none
 //////////////////////////////////////////////////////////////////////
@@ -35,14 +36,19 @@ cardDeckContainer::cardDeckContainer()
   :head(NULL), tail(NULL)
 {
   try{
+    //Dummy card Deck created (empty) to fill
+    //to be used to fill the Head aand Tail of the cardDeckContainer
     cardDeck dummy;
     head = new llDeckNode(dummy);
     tail = new llDeckNode(dummy);
-    // adjust links
+    // adjust links between the head and tail, the tail has none, and the head
+    // has a sucessor of the tail
     head->setSuccessor(tail);
     tail->setSuccessor(NULL);
     current = head;
+    // Set the current amout of card Decks to Zero
     NoCardDecks = 0;
+    // Memory allocation handling 
   } catch (bad_alloc ex) {
     // check if any node has been allocated and clean up
     if (head != NULL) {
@@ -59,17 +65,18 @@ cardDeckContainer::cardDeckContainer()
 }
 
 //////////////////////////////////////////////////////////////////////
-// llist(orig)
+// cardDeckContainer(orig)
 // copy constructor
-// as class makes use of dynamic memory allocation, explicit copy
-// constructor is required. creates an exact copy of orig.
+// As this class makes use of dynamic memory allocation, an explicit copy
+// constructor is required. It creates an exact copy of orig cardDeckContainer.
 //
-// parameter: llist &orig - reference to original linked list
+// parameter: cardDeckContainer &orig - reference to original cardDeckContainer
 //////////////////////////////////////////////////////////////////////
 cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
 {
   try {
-
+    //Copy over the CardDeck pointer Utilised for 
+    //accessing nodes data in a convienient manner
     obby = orig.accessPoppedData();
     cardDeck dummy;
     // safe old current node
@@ -88,7 +95,7 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
     orig.gotoHead();
     while (orig.gotoNextNode() == ok) {
       if (orig.current == orig.tail) break;
-      insertNode(orig.accessData());
+      push(orig.accessData());
       gotoNextNode();
     }
 
@@ -116,9 +123,10 @@ cardDeckContainer::cardDeckContainer(cardDeckContainer &orig)
 }
 
 //////////////////////////////////////////////////////////////////////
-// ~llist()
+// ~cardDeckContainer()
 // destructor
-// as class uses dynamic memory, explicit destructor is required
+// since this class uses dynamic memory, an
+// explicit destructor is required
 //////////////////////////////////////////////////////////////////////
 cardDeckContainer::~cardDeckContainer()
 {
@@ -133,43 +141,11 @@ cardDeckContainer::~cardDeckContainer()
 //////////////////////////////////////////////////////////////////////
 // member function definition
 //////////////////////////////////////////////////////////////////////
-// insertNode(newdata)
-// creates a new node, associates newdata with it and inserts the
-// new node after the current node
-//
-// parameter: data &newdata - reference to data for node
-// return: ok - node has been inserted
-//         noMemory - no memory was available for construction of
-//                          node
-//         illegalNode - cannot insert node after tail
-//////////////////////////////////////////////////////////////////////
-cardDeckContainer::llError cardDeckContainer::insertNode(cardDeck &newdata)
-{
-
-  llDeckNode *newnode;
-  llError returnvalue=ok;
-  try {
-    // test if insertion is possible at current location
-    if (current == tail) {
-      returnvalue = illegalNode;
-    } else {
-      // insert node
-      newnode = new llDeckNode(newdata,current->getSuccessor());
-      newnode->setSuccessor(current->getSuccessor());
-      current->setSuccessor(newnode);
-      NoCardDecks = NoCardDecks + 1;
-    }
-  } catch (bad_alloc ex) {
-    // deal with allocation failure
-    returnvalue = noMemory;
-  }
-  return returnvalue;
-}
 
 //////////////////////////////////////////////////////////////////////
 // gotoNextNode()
 // sets current node to successor of current node, thus traversing
-// eventually the entire linked list
+// the entire linked list one step at a time
 //
 // parameter: none
 // return: ok - goto successfull
@@ -263,17 +239,15 @@ cardDeckContainer::llError cardDeckContainer::returnSpecificDeck(int ID)
 
 }
 
-
-
-
 //////////////////////////////////////////////////////////////////////
 // accessData()
-// accesses the data of the current node, allows both reading and
-// writing access.
+// accesses the data of the (current node), allows both reading and
+// writing access. Kept for compatability
 //
 // parameter: none
 // return: reference to data associated with current node
 //////////////////////////////////////////////////////////////////////
+
 cardDeck &cardDeckContainer::accessData()
 {
   if (current == head) throw "Accessing data of head node";
@@ -282,25 +256,14 @@ cardDeck &cardDeckContainer::accessData()
 }
 
 //////////////////////////////////////////////////////////////////////
-// printList()
-// prints the entire linked list to the screen (standard output)
-// attention: the member current of the linked list should not be
-// modified
-//
-// parameter: none
-// return: void
+// push(cardDeck &data)
+// Pushes a new CardDeck into the cardDeckContainer in the manner
+// of a stack based linked list
+// 
+// added the new cardDeck underNeath the Head
+// parameter: cardDeck &data
+// return: Boolean status 
 //////////////////////////////////////////////////////////////////////
-void cardDeckContainer::printList()
-{
-  llDeckNode *printCurrent=head->getSuccessor();
-  cout << "Head" << endl;
-  while (printCurrent != tail) {
-    cout << "ID: "
-	   << printCurrent->getData().getID() << endl;
-    printCurrent = printCurrent->getSuccessor();
-  }
-	cout << "Tail" << endl;
-}
 
 bool cardDeckContainer::push(cardDeck &data)
 {
@@ -337,8 +300,8 @@ bool cardDeckContainer::push(cardDeck &data)
 // through another method accessPoppedData()
 //
 // parameter: none
-// return: ok - removal successful
-//         status - cannot find or can find node to be removed.
+// return: true - removal successful
+//         false - cannot find or can find node to be removed.
 //////////////////////////////////////////////////////////////////////
 
 bool cardDeckContainer::pop()
@@ -370,6 +333,8 @@ bool cardDeckContainer::pop()
     // adjust current to predecessor [HEAD]
     current = delnodePredecessor;
     status = true;
+    // reduce the number of decks specified to be in
+    // the container
     NoCardDecks = NoCardDecks - 1;
     }
     else{cout << "Empty STACK -- Nothing to POP" << endl;}
@@ -377,6 +342,16 @@ bool cardDeckContainer::pop()
  return status;
 }
 
+//////////////////////////////////////////////////////////////////////
+// del_empty() 
+// removes the successor of HEAD from the stack but does not pop
+// was required to fully realise the final Main game logic
+//
+//
+// parameter: none
+// return: true - removal successful
+//         false - cannot find or can find node to be removed.
+//////////////////////////////////////////////////////////////////////
 
 bool cardDeckContainer::del_empty()
 {
@@ -394,9 +369,6 @@ bool cardDeckContainer::del_empty()
     delnodePredecessor = current;
     //set the current as the next node, successor of Head
     current = current->getSuccessor();
-    //store the object - this is the object that is popped
-    // store it in a member attribute for access from another method
-    // obby = &current->getData();
     // set the current node for deletion - ready for pop
     //Delete node under Head
     delnode = current;
@@ -413,9 +385,18 @@ bool cardDeckContainer::del_empty()
   }catch (bad_alloc ex){cout << "Memory Error" << endl;}
  return status;
 }
+
+
 //////////////////////////////////////////////////////////////////////
 // accessPoppedData()
 // accesses the data of the popped node
+// which is stored in the "obby" class attribute 
+// this allowed a simular method of access to a stack
+// while not having to deal with Null object returns if
+// such an element did not exist in the other functions 
+//
+// also meant that we did not have to traverse the Container
+// using gotos() ect.
 //
 // parameter: none
 // return: reference to data popped from node
@@ -423,8 +404,7 @@ bool cardDeckContainer::del_empty()
 
 cardDeck *cardDeckContainer::accessPoppedData()
 {
-  //cout << "reached here access" << endl;
-  //if (current == head) throw "Accessing data of head node";
+
   if (obby->getID() == 0)
   {
   throw "There is no popped object available";
@@ -445,10 +425,10 @@ cardDeck *cardDeckContainer::accessPoppedData()
 //////////////////////////////////////////////////////////////////////
 // llDeckNode(newd, nextNode)
 // default constructor
-// constructs a new node, associates newd as data and sets its
+// constructs a new node, associates newd as a new Deck and sets its
 // successor to nextNode
 //
-// parameter: data newd - data for the new node
+// parameters: data newd - new deck for the node
 //            llDeckNode *nextNode - pointer to successor of new node
 //////////////////////////////////////////////////////////////////////
 llDeckNode::llDeckNode(cardDeck newd, llDeckNode *nextNode)

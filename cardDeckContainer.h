@@ -18,33 +18,31 @@ class llDeckNode {
 };
 
 
-
-// define linked list class
 class cardDeckContainer
 {
  public:
-  bool push(cardDeck &data);
-  bool pop();
-  bool del_empty();
-
   // define error-conditions
   typedef enum {ok,noMemory,illegalNode} llError;
 
+  // Container data manipulations 
+  bool push(cardDeck &data);
+  bool pop();
+  bool del_empty();
   // access data last popped from the stack
   cardDeck * accessPoppedData();
-  // Used by member methods
-
+  //return a spefic Deck from the container based on ID
+  llError returnSpecificDeck(int id);
+  //return the number of decks in the container
   inline int getNoCardsDecks(){return NoCardDecks;};
 
+
+  // Used by member methods
   cardDeck & accessData();
   inline void gotoHead() {current = head;}
   llError gotoNextNode();
   llError deleteNode(cardDeck &d);
-  llError insertNode(cardDeck &newdata);
 
-  llError returnSpecificDeck(int id);
-
-  void printList();
+  //Constructors and Deststructors
   cardDeckContainer(cardDeckContainer &orig);
   cardDeckContainer();
   virtual ~cardDeckContainer();

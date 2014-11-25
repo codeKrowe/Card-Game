@@ -61,7 +61,7 @@ cardDeck::cardDeck(int newSize, int ID)
 }
 
 //////////////////////////////////////////////////////////////////////
-// dynarray(orig)
+// cardDeck(orig)
 // copy constructor to create copy of a card deck with its own
 // memory. if memory cannot be allocated, exception is thrown
 // parameter: orig - reference to original deck
@@ -99,27 +99,11 @@ cardDeck::~cardDeck()
   delete[] cdeck;
 }
 
-// Returns a specific card, doesn't delete it!
-card cardDeck::getCard(card c, bool &found)
-{
-  int position;
-  card temp;
-
-  for (int i =0; i < size; ++i)
-  {
-    if(cdeck[i].getCardRank() == c.getCardRank()
-      || cdeck[i].getCardSuit() == c.getCardSuit())
-    {
-      temp = cdeck[i];
-      found = true;
-    }
-  }
-
-  return temp;
-}
 
 //////////////////////////////////////////////////////////////////////
 //getNumberOfCards()
+//returns the number of cards in the deck
+//cant modify the deck
 //////////////////////////////////////////////////////////////////////
 int cardDeck::getNumberOfCards() const
 {
@@ -129,6 +113,12 @@ int cardDeck::getNumberOfCards() const
 
 //////////////////////////////////////////////////////////////////////
 // getTopCard()
+// accesses and removes the topcard from the deck
+// passess that card back up to the call
+//
+// parameter: none
+// return: card
+// throw : cardDeckException ""Size in the negative -- incorrect""
 //////////////////////////////////////////////////////////////////////
 card cardDeck::getTopCard()
 {
@@ -164,21 +154,36 @@ card cardDeck::getTopCard()
   return temp;
 }
 
+//////////////////////////////////////////////////////////////////////
+// getSpecificCard(card)
 // Returns a specific card, when it finds the card it deletes it while
-// moving the cards above it down one postition
+// moving the cards above it -  down one postition
+//
+// parameter: card passedCard- card to find and remove
+// return: card
+// throw : bad_alloc - new array not allocated
+//////////////////////////////////////////////////////////////////////
+
 
 card cardDeck::getSpecificCard(card c)
 {
-  int position;
+  //int position;
   card temp;
 
+  //search though array indexes
   for (int i =0; i < size; ++i)
   {
+    //check if the passed card matches in either suit or rank
     if(cdeck[i].getCardRank() == c.getCardRank()
       || cdeck[i].getCardSuit() == c.getCardSuit() )
     {
+      //if they do, take the first match, and set it to temp
+      // so that it can be passed back to call
+      // set size one smaller
       size = size - 1;
       temp = cdeck[i];
+      // swap the cards positions from the position of the 
+      // card that was removed
       for (int j = i; j <size; ++j )
       {
         cdeck[j] = cdeck[j+1];
@@ -192,8 +197,48 @@ card cardDeck::getSpecificCard(card c)
   return temp;
 }
 
+
 //////////////////////////////////////////////////////////////////////
-// addCard()
+//getCard(card,bool)
+//Returns a specific card, doesn't delete it!(card)
+//
+// A Modification of getSpecific card - used
+// for unfortseen functional requirements in the main game logic
+//
+// parameter: card passedCard- card to find and remove
+// return: card
+// return: through passed refernce - bool // true - card found
+//                                        //false - no found
+//////////////////////////////////////////////////////////////////////
+
+card cardDeck::getCard(card c, bool &found)
+{
+  int position;
+  card temp;
+
+  for (int i =0; i < size; ++i)
+  {
+    if(cdeck[i].getCardRank() == c.getCardRank()
+      || cdeck[i].getCardSuit() == c.getCardSuit())
+    {
+      temp = cdeck[i];
+      found = true;
+    }
+  }
+
+  return temp;
+}
+
+//////////////////////////////////////////////////////////////////////
+// addCard(card)
+// creates a new index in the cardDeck dynamic array
+// and if it was bigger than previously then copy the contents
+// to a new larger array and destruct the older one.
+//
+// parameter: card passedCard- new card for new index
+// return: true - card has been inserted
+//         false - card not inserted
+// throw : bad_alloc - new array not allocated
 //////////////////////////////////////////////////////////////////////
 bool cardDeck::addCard(card passedCard)
 {
@@ -215,12 +260,16 @@ bool cardDeck::addCard(card passedCard)
 
   try
   {
+    // increase size and check within bounds
     int newsize = size +1;
     if (newsize > 52)
     {
       throw cardDeckException("Size is incorrect");
     }
 
+    //create a new deck array of the new size
+    //and copy over the contents
+    //adding the passed card the new index
     newDeck = new card[newsize];
     for (i=0; i<newsize; i++)
     {
@@ -342,6 +391,14 @@ void cardDeck::shuffleDeck()
     }
 }
 
+//////////////////////////////////////////////////////////////////////
+//fill(): fills a decks with cards in a sequential ordder
+//
+//
+//Pre: there is a valid dynamic array to fill
+//Post: all indexs are filled to the size or the cardDeck
+//////////////////////////////////////////////////////////////////////
+
 void cardDeck::fill()
 {
   int counter = 0;
@@ -359,6 +416,14 @@ void cardDeck::fill()
   }
 }
 
+
+//////////////////////////////////////////////////////////////////////
+//setSize(s): sets the size of the cardDeck directly
+//
+//
+//Pre: valid cardDeck
+//Post: size set
+//////////////////////////////////////////////////////////////////////
 void cardDeck::setSize(int s)
 {
 	size = s;

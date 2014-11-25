@@ -3,7 +3,7 @@
 #include "cardDeck.h"
 #include "cardDeckException.h"
 #include "cardDeckContainer.h"
-#include "player.h"
+
 
 using namespace std;
 
@@ -30,6 +30,8 @@ int main()
       // with gotoHead() beforehand
       Container.push(cd);
     }
+
+    ////// Player Containers/////////////////
     cardDeckContainer player1Container;
     cardDeck Player1Deck;
     Player1Deck.setID(1);
@@ -84,8 +86,12 @@ int main()
     // run out and a reshuffle of the played cards has occurred
     bool shuffled = false;
 
+    // while there are Decks
     while (Container.getNoCardsDecks() > 0)
     {
+      // if the conatainers have a temp Deck stored that is not full or empty
+      // depending on the use - full for PLayed
+      // empty fot the main container deck
       if(Container.accessPoppedData()->getNumberOfCards() > 0
       && playedCardsContainer.accessPoppedData()->getNumberOfCards() < 52)
       {
@@ -93,12 +99,16 @@ int main()
         // Get out the Top card for comparision with Either Player one or player 2
         card topcard = Container.accessPoppedData()->getTopCard();
 
+        //switch turns between players
         if(counter % 2 == 0)
         {
           found = false;
+          // pull a card out of player container if it matches the topcard from the played deck
           card cardToAdd = player1Container.accessPoppedData()->getCard(topcard, found);
+          // add to counter so that it will switch turns
           counter = counter + 1;
 
+          // if found add card to played container from players hand
           if (found == true)
           {
             cout << "Player 1 has a matching card!" << endl;
@@ -110,6 +120,7 @@ int main()
             playedCardsContainer.accessPoppedData()->addCard(cardToAdd);
             // Finally check if player 1's hand is empty
 
+            // if player ones hand is empty they are the winner
             if (player1Container.accessPoppedData()->getNumberOfCards() == 0)
             {
               cout << "Player 1 is the winner!!" << endl;
@@ -118,6 +129,7 @@ int main()
           }
           else
           {
+            //else they draw a card from the deck and add it to ther own
             cout << "Player 1 has no matching cards" << endl;
             cout << "Player 1 draws a card" << endl;
             // Add card from container deck to player 1 deck
@@ -128,6 +140,7 @@ int main()
       ///////////////////////////// PLayer 2 Section ///////////////////////////////////
       else
       {
+        /// all same as player 1
         found = false;
         card cardToAdd2 = player2Container.accessPoppedData()->getCard(topcard, found);
         counter = counter + 1;
