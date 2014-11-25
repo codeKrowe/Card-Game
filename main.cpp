@@ -13,10 +13,17 @@ int main()
   {
     cardDeckContainer Container;
 
-    int no_of_decks;
-    cout << "Please Enter a Number of Decks to play with" << endl;
-    cin >> no_of_decks;
+    int no_of_decks = 0;
 
+    // Number of cards in each players hand.
+    int handSize = 7;
+
+    // Must enter 1 or more decks to play with.
+    while (no_of_decks <= 0)
+    {
+      cout << "Please Enter a Number of Decks to play with" << endl;
+      cin >> no_of_decks;
+    }
 
     for (int i = 0; i < no_of_decks; ++i)
     {
@@ -31,7 +38,7 @@ int main()
       Container.push(cd);
     }
 
-    ////// Player Containers/////////////////
+    ////// Player Containers //////
     cardDeckContainer player1Container;
     cardDeck Player1Deck;
     Player1Deck.setID(1);
@@ -44,7 +51,7 @@ int main()
     player2Container.push(Player2Deck);
 
     /* Played Cards Container */
-    // for the played cards decks////////
+    // for the played cards decks //
     cardDeckContainer playedCardsContainer;
     cardDeck playedCardsDeck;
     playedCardsDeck.setID(1);
@@ -59,7 +66,7 @@ int main()
     player2Container.returnSpecificDeck(1);
     player1Container.returnSpecificDeck(1);
 
-    for (int i = 1;i <= 14; ++i)
+    for (int i = 1;i <= handSize*2; ++i)
     {
       if((i+2)%2 == 0)
       {
