@@ -19,10 +19,17 @@ int main()
     int handSize = 7;
 
     // Must enter 1 or more decks to play with.
+    // Make sure that a Number is what is entered
     while (no_of_decks <= 0)
     {
       cout << "Please Enter a Number of Decks to play with" << endl;
       cin >> no_of_decks;
+      while (!cin) {
+      cout << "\n PLease enter a number \n" ;
+      cin.clear();
+      cin.ignore(256,'\n');
+      cin >> no_of_decks;
+      }
     }
 
     for (int i = 0; i < no_of_decks; ++i)
